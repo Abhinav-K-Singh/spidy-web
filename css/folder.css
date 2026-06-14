@@ -1,0 +1,480 @@
+/* ====================================
+   FOLDER CONTAINER
+==================================== */
+
+#folderContainer{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+margin-top:15px;
+
+}
+
+/* ====================================
+   FOLDER CARD
+==================================== */
+
+.folder{
+
+position:relative;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(14px);
+
+border:
+1px solid
+rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:18px;
+
+overflow:hidden;
+
+transition:.35s;
+
+}
+
+.folder:hover{
+
+transform:
+translateY(-4px);
+
+box-shadow:
+
+0 0 25px
+rgba(255,0,60,.15),
+
+0 0 35px
+rgba(0,102,255,.12);
+
+}
+
+/* ====================================
+   CUSTOM BACKGROUND IMAGE
+==================================== */
+
+.folder.has-image{
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+}
+
+.folder.has-image::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+rgba(0,0,0,.45);
+
+backdrop-filter:
+blur(3px);
+
+}
+
+.folder.has-image>*{
+
+position:relative;
+
+z-index:2;
+
+}
+
+/* ====================================
+   HEADER
+==================================== */
+
+.folder-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+
+.folder-title{
+
+font-size:18px;
+
+font-weight:700;
+
+word-break:break-word;
+
+}
+
+.folder-type{
+
+font-size:13px;
+
+opacity:.8;
+
+margin-top:4px;
+
+}
+
+/* ====================================
+   ACTION BUTTONS
+==================================== */
+
+.folder-actions{
+
+display:flex;
+
+gap:8px;
+
+}
+
+.folder-actions button{
+
+width:36px;
+
+height:36px;
+
+padding:0;
+
+border-radius:10px;
+
+background:
+rgba(255,255,255,.08);
+
+}
+
+.folder-actions button:hover{
+
+background:
+rgba(255,255,255,.15);
+
+}
+
+/* ====================================
+   FOLDER CONTENT
+==================================== */
+
+.folder-content{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+/* ====================================
+   LINK ITEMS
+==================================== */
+
+.link-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:12px;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.05);
+
+transition:.3s;
+
+}
+
+.link-item:hover{
+
+background:
+rgba(255,255,255,.10);
+
+}
+
+.link-item a{
+
+color:inherit;
+
+text-decoration:none;
+
+font-weight:600;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+max-width:80%;
+
+}
+
+.link-item a:hover{
+
+text-decoration:underline;
+
+}
+
+/* ====================================
+   NOTES
+==================================== */
+
+.note-box{
+
+width:100%;
+
+min-height:180px;
+
+padding:15px;
+
+border:none;
+
+outline:none;
+
+resize:vertical;
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,.06);
+
+color:inherit;
+
+font-size:15px;
+
+line-height:1.6;
+
+}
+
+/* ====================================
+   TODO ITEMS
+==================================== */
+
+.todo-item{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:12px;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+.todo-item input[type="checkbox"]{
+
+width:18px;
+
+height:18px;
+
+cursor:pointer;
+
+}
+
+.todo-item.completed span{
+
+text-decoration:line-through;
+
+opacity:.6;
+
+}
+
+.todo-item span{
+
+flex:1;
+
+word-break:break-word;
+
+}
+
+/* ====================================
+   ADD BUTTONS
+==================================== */
+
+.folder-add-btn{
+
+width:100%;
+
+padding:12px;
+
+border-radius:14px;
+
+margin-top:5px;
+
+font-weight:600;
+
+}
+
+/* ====================================
+   COLOR THEMES
+==================================== */
+
+.folder-red{
+
+border-left:4px solid #ff003c;
+
+}
+
+.folder-blue{
+
+border-left:4px solid #0066ff;
+
+}
+
+.folder-green{
+
+border-left:4px solid #00c853;
+
+}
+
+.folder-purple{
+
+border-left:4px solid #8b5cf6;
+
+}
+
+.folder-orange{
+
+border-left:4px solid #ff9800;
+
+}
+
+/* ====================================
+   DRAG STATE
+==================================== */
+
+.folder.dragging{
+
+opacity:.5;
+
+transform:scale(.98);
+
+}
+
+.folder.drag-over{
+
+border:
+2px dashed
+#0066ff;
+
+}
+
+/* ====================================
+   EMPTY STATE
+==================================== */
+
+.empty-folder{
+
+padding:20px;
+
+text-align:center;
+
+opacity:.65;
+
+font-style:italic;
+
+}
+
+/* ====================================
+   PROGRESS BAR
+==================================== */
+
+.todo-progress{
+
+height:8px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.08);
+
+overflow:hidden;
+
+margin-bottom:10px;
+
+}
+
+.todo-progress-fill{
+
+height:100%;
+
+width:0;
+
+background:
+linear-gradient(
+90deg,
+#ff003c,
+#0066ff
+);
+
+transition:.4s;
+
+}
+
+/* ====================================
+   FOLDER IMAGE PREVIEW
+==================================== */
+
+.folder-preview{
+
+width:100%;
+
+height:120px;
+
+border-radius:14px;
+
+object-fit:cover;
+
+margin-bottom:10px;
+
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+
+@media(max-width:768px){
+
+.folder-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+.folder-actions{
+
+width:100%;
+
+justify-content:flex-end;
+
+}
+
+}

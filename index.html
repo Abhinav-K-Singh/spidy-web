@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Spidy Browser</title>
+
+<!-- CSS -->
+
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/sidebar.css">
+<link rel="stylesheet" href="css/folders.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body data-theme="dark">
+
+<!-- Spider Effects -->
+
+<div class="web top-left"></div>
+<div class="web top-right"></div>
+
+<div class="spider-thread"></div>
+<div class="spider">🕷</div>
+
+<div class="skyline"></div>
+
+<!-- APP -->
+
+<div id="app">
+
+<!-- SIDEBAR -->
+
+
+<aside id="sidebar">
+
+    <!-- Logo Section -->
+    <div class="sidebar-header">
+
+        <div class="logo">
+            🕷
+        </div>
+
+        <div class="logo-text">
+            Spidy Web
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav id="sidebar-nav">
+
+        <div class="nav-item active">
+
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span class="nav-text">
+                Dashboard
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                🌐
+            </span>
+
+            <span class="nav-text">
+                GitHub
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                💻
+            </span>
+
+            <span class="nav-text">
+                Coding
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                🤖
+            </span>
+
+            <span class="nav-text">
+                AI
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                🎬
+            </span>
+
+            <span class="nav-text">
+                Creator
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                📝
+            </span>
+
+            <span class="nav-text">
+                Notes
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                ✅
+            </span>
+
+            <span class="nav-text">
+                Todo
+            </span>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </div>
+
+    </nav>
+
+    <!-- Bottom Toggle -->
+    <div id="sidebar-toggle">
+
+        <span class="toggle-icon">
+            ☰
+        </span>
+
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main id="main-content">
+
+<!-- HEADER -->
+
+<header class="top-header">
+
+<div>
+
+<h1>
+
+Spidy Web
+
+</h1>
+
+<p id="dateLine">
+
+Your Friendly Neighborhood Dashboard
+
+</p>
+
+</div>
+
+<div class="header-right">
+
+<div class="weather-mini">
+
+<span id="weatherIcon">
+
+🌤
+
+</span>
+
+<span id="temperature">
+
+--
+
+</span>
+
+</div>
+
+<div class="clock-mini">
+
+<span id="clock">
+
+00:00
+
+</span>
+
+</div>
+
+<button id="themeBtn">
+
+🌙
+
+</button>
+
+<button id="settingsBtn">
+
+⚙
+
+</button>
+
+</div>
+
+</header>
+
+<!-- SEARCH -->
+
+<section class="search-section">
+
+<div class="search-wrapper">
+
+<input
+id="searchInput"
+placeholder="🔍 Search the Multiverse..."
+>
+
+<div class="search-engines">
+
+<button
+class="engine-btn active"
+data-engine="google">
+
+Google
+
+</button>
+
+<button
+class="engine-btn"
+data-engine="youtube">
+
+YouTube
+
+</button>
+
+<button
+class="engine-btn"
+data-engine="github">
+
+GitHub
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- DASHBOARD -->
+
+<section
+id="dashboard-grid"
+class="dashboard-grid">
+
+<!-- CLOCK -->
+
+
+<!-- WEATHER -->
+
+
+
+<!-- GITHUB -->
+
+<div class="widget">
+
+<h3>
+
+📊 GitHub
+
+</h3>
+
+<input
+id="githubUsername"
+placeholder="GitHub Username"
+>
+
+<button id="loadGithub">
+
+Load
+
+</button>
+
+<div id="githubData">
+
+</div>
+
+</div>
+
+<!-- SPOTIFY -->
+
+<div class="widget">
+
+<h3>
+
+🎵 YouTube Music
+
+</h3>
+
+<div id="spotifyWidget">
+
+Connect Spotify
+
+</div>
+
+</div>
+
+<!-- NOTES -->
+
+<div class="widget">
+
+<h3>
+
+📝 Quick Notes
+
+</h3>
+
+<textarea
+id="quickNotes"
+placeholder="Write anything..."
+></textarea>
+
+</div>
+
+<!-- TODO -->
+
+<div class="widget">
+
+<h3>
+
+✅ Quick Todo
+
+</h3>
+
+<div id="quickTodo">
+
+</div>
+
+<button id="addTodoBtn">
+
++ Task
+
+</button>
+
+</div>
+
+<!-- FOLDERS -->
+
+<div class="widget folders-widget">
+
+<div class="widget-header">
+
+<h3>
+
+📁 Folders
+
+</h3>
+
+<button id="addFolderBtn">
+
++ Create Folder
+
+</button>
+
+</div>
+
+<div id="folderContainer">
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<!-- SETTINGS PANEL -->
+
+<div
+id="settingsPanel"
+class="settings-panel">
+<div
+class="settings-close"
+id="settingsClose">
+
+✕
+
+</div>
+<h2>
+
+⚙ Settings
+
+</h2>
+
+<!-- Theme -->
+
+<div class="setting-group">
+
+<h3>
+
+Theme
+
+</h3>
+
+<button
+onclick="setTheme('dark')">
+
+Dark Spider
+
+</button>
+
+<button
+onclick="setTheme('light')">
+
+Light Comic
+
+</button>
+
+</div>
+
+<!-- Wallpaper -->
+
+<div class="setting-group">
+
+<h3>
+
+Wallpaper
+
+</h3>
+
+<label
+for="wallpaperUpload"
+class="upload-card">
+
+🕷 Upload Wallpaper
+
+<span>
+
+PNG • JPG • WEBP
+
+</span>
+
+</label>
+
+<input
+type="file"
+id="wallpaperUpload"
+hidden>
+
+</div>
+
+<!-- Import Export -->
+
+<div class="setting-group">
+
+<h3>
+Backup & Restore
+</h3>
+
+<div class="settings-actions">
+
+<button
+onclick="exportSettings()"
+class="settings-action">
+
+📤
+
+<span>
+Export Backup
+</span>
+
+</button>
+
+<label
+for="importSettings"
+class="settings-action">
+
+📥
+
+<span>
+Import Backup
+</span>
+
+</label>
+
+<input
+type="file"
+id="importSettings"
+accept=".json"
+hidden>
+
+<div
+class="settings-action"
+onclick="resetDashboard()">
+
+🗑
+
+<span>
+Reset Dashboard
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- COMMAND PALETTE -->
+
+<div
+id="commandPalette"
+class="command-palette">
+
+<input
+id="commandInput"
+placeholder="Type a command..."
+>
+
+</div>
+
+<!-- JS -->
+
+<script src="js/storage.js"></script>
+
+<script src="js/utils.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script src="js/settings.js"></script>
+
+<script src="js/weather.js"></script>
+
+<script src="js/github.js"></script>
+
+<script src="js/ytmusic.js"></script>
+
+<script src="js/folders.js"></script>
+
+<script src="js/dragdrop.js"></script>
+
+<script src="js/commandPalette.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

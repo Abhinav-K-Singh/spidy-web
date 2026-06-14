@@ -1,0 +1,398 @@
+/* ====================================
+   SIDEBAR
+==================================== */
+
+#sidebar{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:280px;
+
+height:100vh;
+
+background:
+rgba(10,12,18,.92);
+
+backdrop-filter:
+blur(18px);
+
+-webkit-backdrop-filter:
+blur(18px);
+
+border-right:
+1px solid rgba(255,255,255,.08);
+
+display:flex;
+
+flex-direction:column;
+
+overflow:hidden;
+
+z-index:1000;
+
+transition:
+width .35s ease;
+
+}
+
+/* ====================================
+   LEFT GLOW BAR
+==================================== */
+
+#sidebar::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:4px;
+
+height:100%;
+
+background:
+linear-gradient(
+to bottom,
+#ff003c,
+#0066ff
+);
+
+}
+
+/* ====================================
+   HEADER
+==================================== */
+
+.sidebar-header{
+
+height:80px;
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:20px;
+
+border-bottom:
+1px solid rgba(255,255,255,.06);
+
+}
+
+.logo{
+
+font-size:32px;
+
+min-width:40px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+animation:
+spiderPulse 3s infinite;
+
+}
+
+.logo-text{
+
+font-size:22px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+transition:.3s;
+
+}
+
+/* ====================================
+   NAVIGATION
+==================================== */
+
+#sidebar-nav{
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+padding:20px 10px;
+
+flex:1;
+
+overflow-y:auto;
+
+}
+
+.nav-item{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+height:52px;
+
+padding:0 18px;
+
+border-radius:14px;
+
+cursor:pointer;
+
+transition:.3s;
+
+user-select:none;
+
+}
+
+.nav-icon{
+
+font-size:20px;
+
+min-width:24px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.nav-text{
+
+white-space:nowrap;
+
+font-size:16px;
+
+}
+
+/* ====================================
+   HOVER
+==================================== */
+
+.nav-item:hover{
+
+background:
+rgba(255,255,255,.08);
+
+box-shadow:
+0 0 12px rgba(255,0,60,.15);
+
+transform:
+translateX(4px);
+
+}
+
+/* ====================================
+   ACTIVE
+==================================== */
+
+.nav-item.active{
+
+background:
+linear-gradient(
+90deg,
+rgba(255,0,60,.30),
+rgba(0,102,255,.20)
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 15px rgba(255,0,60,.25);
+
+}
+
+/* ====================================
+   TOGGLE
+==================================== */
+
+#sidebar-toggle{
+
+height:65px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+font-size:24px;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+#sidebar-toggle:hover{
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+/* ====================================
+   COLLAPSED SIDEBAR
+==================================== */
+
+#sidebar.collapsed{
+
+width:80px;
+
+}
+
+#sidebar.collapsed .logo-text{
+
+display:none;
+
+}
+
+#sidebar.collapsed .nav-text{
+
+display:none;
+
+}
+
+#sidebar.collapsed .sidebar-header{
+
+justify-content:center;
+
+padding:20px 0;
+
+}
+
+#sidebar.collapsed .nav-item{
+
+justify-content:center;
+
+padding:0;
+
+}
+
+#sidebar.collapsed .nav-item:hover{
+
+transform:none;
+
+}
+
+/* ====================================
+   TOOLTIP
+==================================== */
+
+#sidebar.collapsed .nav-item{
+
+position:relative;
+
+}
+
+#sidebar.collapsed .nav-item:hover::after{
+
+content:attr(data-tooltip);
+
+position:absolute;
+
+left:70px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+background:
+rgba(15,15,20,.95);
+
+padding:8px 12px;
+
+border-radius:10px;
+
+white-space:nowrap;
+
+font-size:14px;
+
+z-index:9999;
+
+}
+
+/* ====================================
+   ANIMATION
+==================================== */
+
+@keyframes spiderPulse{
+
+0%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+
+}
+
+/* ====================================
+   MOBILE
+==================================== */
+
+@media(max-width:900px){
+
+#sidebar{
+
+left:-280px;
+
+width:280px;
+
+}
+
+#sidebar.open{
+
+left:0;
+
+}
+
+#sidebar.collapsed{
+
+width:280px;
+
+}
+
+#sidebar.collapsed .logo-text{
+
+display:block;
+
+}
+
+#sidebar.collapsed .nav-text{
+
+display:block;
+
+}
+
+}

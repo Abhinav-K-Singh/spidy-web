@@ -1,0 +1,375 @@
+/* ====================================
+   THEME VARIABLES
+==================================== */
+
+:root{
+
+--bg-primary:#090b10;
+--bg-secondary:#111827;
+--bg-card:rgba(255,255,255,.08);
+
+--text-primary:#ffffff;
+--text-secondary:#b6b6b6;
+
+--accent-red:#ff003c;
+--accent-blue:#0066ff;
+
+--border:
+rgba(255,255,255,.08);
+
+}
+
+/* ====================================
+   DARK SPIDER THEME
+==================================== */
+
+body[data-theme="dark"]{
+
+--bg-primary:#090b10;
+--bg-secondary:#111827;
+
+--bg-card:
+rgba(255,255,255,.08);
+
+--text-primary:#ffffff;
+--text-secondary:#b6b6b6;
+
+--accent-red:#ff003c;
+--accent-blue:#0066ff;
+
+background:
+radial-gradient(
+circle at 20% 20%,
+rgba(255,0,60,.15),
+transparent 25%
+),
+
+radial-gradient(
+circle at 80% 30%,
+rgba(0,102,255,.15),
+transparent 25%
+),
+
+#090b10;
+
+color:
+var(--text-primary);
+
+}
+
+/* ====================================
+   LIGHT COMIC THEME
+==================================== */
+
+body[data-theme="light"]{
+
+--bg-primary:#f5f5f5;
+--bg-secondary:#ffffff;
+
+--bg-card:
+rgba(255,255,255,.85);
+
+--text-primary:#111111;
+--text-secondary:#555555;
+
+--accent-red:#ff003c;
+--accent-blue:#0066ff;
+
+background:
+linear-gradient(
+135deg,
+#ffffff,
+#ececec
+);
+
+color:
+var(--text-primary);
+
+}
+
+/* ====================================
+   NEON SPIDER THEME
+==================================== */
+
+body[data-theme="neon"]{
+
+--bg-primary:#05070c;
+--bg-secondary:#0d1320;
+
+--bg-card:
+rgba(0,0,0,.35);
+
+--text-primary:#ffffff;
+--text-secondary:#8da2ff;
+
+--accent-red:#ff1744;
+--accent-blue:#00b0ff;
+
+background:
+radial-gradient(
+circle at 20% 20%,
+rgba(255,23,68,.25),
+transparent 30%
+),
+
+radial-gradient(
+circle at 80% 30%,
+rgba(0,176,255,.25),
+transparent 30%
+),
+
+#05070c;
+
+color:
+var(--text-primary);
+
+}
+
+/* ====================================
+   COMIC BOOK THEME
+==================================== */
+
+body[data-theme="comic"]{
+
+--bg-primary:#fff8dc;
+--bg-secondary:#fff2b2;
+
+--bg-card:
+rgba(255,255,255,.95);
+
+--text-primary:#111;
+--text-secondary:#444;
+
+--accent-red:#ff3d00;
+--accent-blue:#2979ff;
+
+background:
+repeating-radial-gradient(
+circle,
+#ffffff,
+#ffffff 10px,
+#f7f7f7 11px,
+#f7f7f7 20px
+);
+
+color:
+var(--text-primary);
+
+}
+
+/* ====================================
+   UNIVERSAL TEXT
+==================================== */
+
+body{
+
+color:
+var(--text-primary);
+
+background-color:
+var(--bg-primary);
+
+transition:
+background .4s ease,
+color .4s ease;
+
+}
+
+p,
+span,
+label{
+
+color:
+var(--text-secondary);
+
+}
+
+/* ====================================
+   UNIVERSAL CARDS
+==================================== */
+
+.widget,
+.folder,
+.settings-panel{
+
+background:
+var(--bg-card);
+
+color:
+var(--text-primary);
+
+border:
+1px solid
+var(--border);
+
+transition:
+all .35s ease;
+
+}
+
+/* ====================================
+   INPUTS
+==================================== */
+
+input,
+textarea,
+select{
+
+background:
+rgba(255,255,255,.06);
+
+color:
+var(--text-primary);
+
+border:
+1px solid
+rgba(255,255,255,.08);
+
+}
+
+/* ====================================
+   BUTTONS
+==================================== */
+
+button{
+
+background:
+linear-gradient(
+135deg,
+var(--accent-red),
+var(--accent-blue)
+);
+
+color:white;
+
+}
+
+/* ====================================
+   SIDEBAR
+==================================== */
+
+#sidebar{
+
+background:
+rgba(15,18,26,.92);
+
+}
+
+body[data-theme="light"] #sidebar{
+
+background:
+rgba(255,255,255,.95);
+
+}
+
+/* ====================================
+   ACTIVE NAV
+==================================== */
+
+.nav-item.active{
+
+background:
+linear-gradient(
+90deg,
+rgba(255,0,60,.25),
+rgba(0,102,255,.18)
+);
+
+}
+
+/* ====================================
+   FOLDER COLORS
+==================================== */
+
+.folder-red{
+
+border-left:
+4px solid
+var(--accent-red);
+
+}
+
+.folder-blue{
+
+border-left:
+4px solid
+var(--accent-blue);
+
+}
+
+.folder-green{
+
+border-left:
+4px solid
+#00c853;
+
+}
+
+.folder-purple{
+
+border-left:
+4px solid
+#8b5cf6;
+
+}
+
+.folder-orange{
+
+border-left:
+4px solid
+#ff9800;
+
+}
+
+/* ====================================
+   AUTO DAY/NIGHT
+==================================== */
+
+body[data-auto-theme="true"]{
+
+transition:
+all .4s ease;
+
+}
+
+/* ====================================
+   GLASS EFFECT BOOST
+==================================== */
+
+body[data-theme="neon"] .widget:hover,
+body[data-theme="dark"] .widget:hover{
+
+box-shadow:
+
+0 0 25px rgba(255,0,60,.25),
+
+0 0 35px rgba(0,102,255,.20);
+
+}
+
+/* ====================================
+   WALLPAPER MODE
+==================================== */
+
+body.has-wallpaper{
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+}
+
+body.has-wallpaper::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,.45);
+
+z-index:-1;
+
+}

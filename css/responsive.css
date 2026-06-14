@@ -1,0 +1,462 @@
+/* ====================================
+   LARGE DESKTOP
+==================================== */
+
+@media (min-width: 1800px){
+
+.dashboard-grid{
+
+grid-template-columns:
+repeat(4,1fr);
+
+}
+
+#main-content{
+
+max-width:1800px;
+
+margin:auto;
+
+}
+
+}
+
+/* ====================================
+   DESKTOP
+==================================== */
+
+@media (max-width: 1400px){
+
+.dashboard-grid{
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(300px,1fr)
+);
+
+}
+
+.folders-widget{
+
+grid-column:
+span 1;
+
+}
+
+}
+
+/* ====================================
+   LAPTOP
+==================================== */
+
+@media (max-width: 1200px){
+
+#sidebar{
+
+width:90px;
+
+}
+
+.logo-text{
+
+display:none;
+
+}
+
+.nav-item{
+
+justify-content:center;
+
+padding-left:0;
+
+}
+
+.top-header h1{
+
+font-size:28px;
+
+}
+
+.clock-widget h2{
+
+font-size:38px;
+
+}
+
+}
+
+/* ====================================
+   TABLET
+==================================== */
+
+@media (max-width: 992px){
+
+#app{
+
+flex-direction:column;
+
+}
+
+#sidebar{
+
+position:fixed;
+
+left:-280px;
+
+top:0;
+
+width:280px;
+
+height:100vh;
+
+z-index:9999;
+
+transition:.35s;
+
+}
+
+#sidebar.open{
+
+left:0;
+
+}
+
+#main-content{
+
+padding:15px;
+
+margin-left:0;
+
+}
+
+.dashboard-grid{
+
+grid-template-columns:
+1fr;
+
+}
+
+.search-wrapper{
+
+flex-direction:column;
+
+}
+
+#searchEngine{
+
+width:100%;
+
+}
+
+.settings-panel{
+
+width:100%;
+
+max-width:none;
+
+}
+
+}
+
+/* ====================================
+   MOBILE
+==================================== */
+
+@media (max-width: 768px){
+
+body{
+
+font-size:14px;
+
+}
+
+.top-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:15px;
+
+}
+
+.header-actions{
+
+width:100%;
+
+justify-content:flex-end;
+
+}
+
+.top-header h1{
+
+font-size:24px;
+
+}
+
+.search-section{
+
+margin-top:10px;
+
+}
+
+.search-wrapper{
+
+gap:8px;
+
+}
+
+#searchInput{
+
+padding:14px;
+
+font-size:14px;
+
+}
+
+.widget{
+
+padding:15px;
+
+border-radius:16px;
+
+}
+
+.clock-widget h2{
+
+font-size:30px;
+
+}
+
+#temperature{
+
+font-size:30px;
+
+}
+
+#quickNotes{
+
+height:140px;
+
+}
+
+.folder-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+.folder-actions{
+
+width:100%;
+
+justify-content:flex-end;
+
+}
+
+.command-palette{
+
+width:95%;
+
+top:20px;
+
+}
+
+#commandInput{
+
+font-size:14px;
+
+padding:14px;
+
+}
+
+.spider,
+.spider-thread,
+.web,
+.skyline{
+
+display:none;
+
+}
+
+}
+
+/* ====================================
+   SMALL MOBILE
+==================================== */
+
+@media (max-width: 480px){
+
+.top-header h1{
+
+font-size:20px;
+
+}
+
+.widget{
+
+padding:12px;
+
+}
+
+.clock-widget h2{
+
+font-size:24px;
+
+}
+
+#temperature{
+
+font-size:24px;
+
+}
+
+button{
+
+padding:8px 12px;
+
+font-size:13px;
+
+}
+
+.folder-title{
+
+font-size:16px;
+
+}
+
+.settings-panel{
+
+padding:15px;
+
+}
+
+}
+
+/* ====================================
+   ULTRA SMALL
+==================================== */
+
+@media (max-width: 360px){
+
+body{
+
+font-size:13px;
+
+}
+
+.top-header h1{
+
+font-size:18px;
+
+}
+
+.widget{
+
+padding:10px;
+
+}
+
+button{
+
+font-size:12px;
+
+}
+
+}
+
+/* ====================================
+   LANDSCAPE MOBILE
+==================================== */
+
+@media (max-height: 500px){
+
+#sidebar{
+
+overflow-y:auto;
+
+}
+
+.settings-panel{
+
+overflow-y:auto;
+
+}
+
+.command-palette{
+
+max-height:80vh;
+
+overflow-y:auto;
+
+}
+
+}
+
+/* ====================================
+   TOUCH DEVICES
+==================================== */
+
+@media (hover:none){
+
+.widget:hover{
+
+transform:none;
+
+}
+
+.nav-item:hover{
+
+transform:none;
+
+}
+
+button:hover{
+
+transform:none;
+
+}
+
+}
+
+/* ====================================
+   PRINT MODE
+==================================== */
+
+@media print{
+
+#sidebar,
+.settings-panel,
+.command-palette,
+.spider,
+.spider-thread,
+.web{
+
+display:none !important;
+
+}
+
+#main-content{
+
+width:100%;
+
+padding:0;
+
+}
+
+.widget{
+
+break-inside:avoid;
+
+box-shadow:none;
+
+border:1px solid #ccc;
+
+}
+
+}

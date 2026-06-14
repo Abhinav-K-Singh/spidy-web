@@ -1,0 +1,594 @@
+/* ====================================
+   GLOBAL ANIMATIONS
+==================================== */
+
+*{
+transition:
+background .3s ease,
+color .3s ease,
+border .3s ease,
+transform .3s ease;
+}
+
+/* ====================================
+   PAGE LOAD
+==================================== */
+
+body{
+
+animation:
+pageFadeIn
+.8s ease;
+
+}
+
+@keyframes pageFadeIn{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+/* ====================================
+   WIDGET APPEAR
+==================================== */
+
+.widget{
+
+animation:
+widgetAppear
+.5s ease;
+
+}
+
+@keyframes widgetAppear{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+/* ====================================
+   FLOAT EFFECT
+==================================== */
+
+.float{
+
+animation:
+floatAnimation
+4s ease-in-out infinite;
+
+}
+
+@keyframes floatAnimation{
+
+0%{
+
+transform:
+translateY(0px);
+
+}
+
+50%{
+
+transform:
+translateY(-8px);
+
+}
+
+100%{
+
+transform:
+translateY(0px);
+
+}
+
+}
+
+/* ====================================
+   SPIDER THREAD
+==================================== */
+
+.spider-thread{
+
+position:fixed;
+
+top:0;
+
+left:82%;
+
+width:2px;
+
+height:180px;
+
+background:
+rgba(255,255,255,.7);
+
+z-index:999;
+
+pointer-events:none;
+
+}
+
+/* ====================================
+   HANGING SPIDER
+==================================== */
+
+.spider{
+
+position:fixed;
+
+top:170px;
+
+left:calc(82% - 16px);
+
+font-size:32px;
+
+z-index:1000;
+
+transform-origin:top center;
+
+animation:
+spiderSwing
+5s ease-in-out infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes spiderSwing{
+
+0%{
+
+transform:
+rotate(-12deg);
+
+}
+
+25%{
+
+transform:
+rotate(-5deg);
+
+}
+
+50%{
+
+transform:
+rotate(12deg);
+
+}
+
+75%{
+
+transform:
+rotate(5deg);
+
+}
+
+100%{
+
+transform:
+rotate(-12deg);
+
+}
+
+}
+
+/* ====================================
+   SPIDER PULSE
+==================================== */
+
+.logo{
+
+animation:
+spiderPulse
+3s ease infinite;
+
+}
+
+@keyframes spiderPulse{
+
+0%{
+
+transform:
+scale(1);
+
+}
+
+50%{
+
+transform:
+scale(1.08);
+
+}
+
+100%{
+
+transform:
+scale(1);
+
+}
+
+}
+
+/* ====================================
+   WEBS
+==================================== */
+
+.web{
+
+position:fixed;
+
+width:180px;
+
+height:180px;
+
+opacity:.08;
+
+pointer-events:none;
+
+z-index:-1;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.2),
+transparent
+);
+
+}
+
+.top-left{
+
+top:-80px;
+
+left:-80px;
+
+}
+
+.top-right{
+
+top:-80px;
+
+right:-80px;
+
+}
+
+/* ====================================
+   WEB GLOW
+==================================== */
+
+.web::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border-radius:50%;
+
+animation:
+webGlow
+4s ease infinite;
+
+}
+
+@keyframes webGlow{
+
+0%{
+
+opacity:.15;
+
+}
+
+50%{
+
+opacity:.4;
+
+}
+
+100%{
+
+opacity:.15;
+
+}
+
+}
+
+/* ====================================
+   COMIC DOODLES
+==================================== */
+
+.doodle{
+
+position:fixed;
+
+font-family:
+Impact,
+sans-serif;
+
+font-weight:900;
+
+pointer-events:none;
+
+opacity:.15;
+
+text-shadow:
+3px 3px 0 #000;
+
+animation:
+doodlePulse
+5s infinite;
+
+}
+
+.doodle.pow{
+
+top:12%;
+
+left:4%;
+
+font-size:40px;
+
+color:#ffcc00;
+
+}
+
+.doodle.bam{
+
+bottom:15%;
+
+right:8%;
+
+font-size:34px;
+
+color:#ff3366;
+
+}
+
+.doodle.thwip{
+
+top:60%;
+
+left:85%;
+
+font-size:28px;
+
+color:#00d9ff;
+
+}
+
+@keyframes doodlePulse{
+
+0%{
+
+transform:
+scale(1);
+
+}
+
+50%{
+
+transform:
+scale(1.1);
+
+}
+
+100%{
+
+transform:
+scale(1);
+
+}
+
+}
+
+/* ====================================
+   BUTTON EFFECTS
+==================================== */
+
+button:hover{
+
+transform:
+translateY(-2px);
+
+box-shadow:
+
+0 0 15px rgba(255,0,60,.25),
+
+0 0 20px rgba(0,102,255,.15);
+
+}
+
+/* ====================================
+   SIDEBAR HOVER
+==================================== */
+
+.nav-item:hover{
+
+transform:
+translateX(6px);
+
+}
+
+/* ====================================
+   SETTINGS PANEL
+==================================== */
+
+.settings-panel{
+
+transition:
+right .35s ease;
+
+}
+
+/* ====================================
+   COMMAND PALETTE
+==================================== */
+
+.command-palette{
+
+opacity:0;
+
+transform:
+translateY(-20px);
+
+pointer-events:none;
+
+transition:.25s;
+
+}
+
+.command-palette.active{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+pointer-events:auto;
+
+}
+
+/* ====================================
+   FOLDER DRAG
+==================================== */
+
+.folder.dragging{
+
+opacity:.55;
+
+transform:
+rotate(1deg);
+
+}
+
+.folder.drag-over{
+
+box-shadow:
+
+0 0 25px rgba(0,102,255,.35);
+
+}
+
+/* ====================================
+   TODO COMPLETE
+==================================== */
+
+.todo-item.completed{
+
+animation:
+taskDone
+.3s ease;
+
+}
+
+@keyframes taskDone{
+
+0%{
+
+transform:
+scale(1);
+
+}
+
+50%{
+
+transform:
+scale(1.03);
+
+}
+
+100%{
+
+transform:
+scale(1);
+
+}
+
+}
+
+/* ====================================
+   SKYLINE PARALLAX
+==================================== */
+
+.skyline{
+
+animation:
+skylineFloat
+12s ease-in-out infinite;
+
+}
+
+@keyframes skylineFloat{
+
+0%{
+
+transform:
+translateY(0);
+
+}
+
+50%{
+
+transform:
+translateY(-4px);
+
+}
+
+100%{
+
+transform:
+translateY(0);
+
+}
+
+}
+
+/* ====================================
+   MOBILE
+==================================== */
+
+@media(max-width:768px){
+
+.spider,
+.spider-thread,
+.web{
+
+display:none;
+
+}
+
+}
