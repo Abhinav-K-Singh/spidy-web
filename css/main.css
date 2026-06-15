@@ -355,17 +355,11 @@ rgba(0,102,255,.15);
 display:grid;
 
 grid-template-columns:
-repeat(
-auto-fit,
-minmax(340px,1fr)
-);
+repeat(3,1fr);
 
 gap:20px;
 
-padding-bottom:100px;
-
 }
-
 /* ====================================
    WIDGET
 ==================================== */
@@ -666,5 +660,926 @@ font-size:16px;
 .weather-mini span{
 
 font-size:16px;
+
+}
+/* ====================================
+   INTERACTIVE SPIDER
+==================================== */
+
+.spider-thread{
+
+position:fixed;
+
+top:0;
+
+left:50%;
+
+width:2px;
+
+height:250px;
+
+background:
+
+linear-gradient(
+to bottom,
+rgba(255,255,255,.95),
+rgba(255,255,255,.2)
+);
+
+transform-origin:
+top center;
+
+pointer-events:none;
+
+z-index:9998;
+
+box-shadow:
+
+0 0 6px rgba(255,255,255,.4);
+
+}
+
+.spider{
+
+position:fixed !important;
+z-index:999999 !important;
+cursor:grab !important;
+pointer-events:auto !important;
+}
+.spider{
+
+position:fixed;
+
+width:60px;
+height:60px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:48px;
+
+cursor:grab;
+
+pointer-events:auto;
+
+touch-action:none;
+
+user-select:none;
+
+z-index:99999;
+
+transform-origin:center center;
+
+}
+
+.spider-thread{
+
+position:fixed;
+
+top:0;
+
+width:2px;
+
+background:
+linear-gradient(
+to bottom,
+rgba(255,255,255,.95),
+rgba(255,255,255,.15)
+);
+
+transform-origin:
+top center;
+
+pointer-events:none;
+
+z-index:99998;
+
+}
+.spider:hover{
+
+filter:
+
+drop-shadow(
+0 0 20px rgba(255,255,255,.8)
+);
+
+}
+
+.spider.dragging{
+
+cursor:grabbing;
+
+filter:
+
+drop-shadow(
+0 0 30px rgba(255,255,255,.9)
+);
+
+}
+.web{
+
+position:fixed;
+
+width:250px;
+
+height:250px;
+
+pointer-events:none;
+
+opacity:.15;
+
+z-index:0;
+
+}
+
+.top-left{
+
+top:0;
+
+left:0;
+
+background:
+
+radial-gradient(
+circle at top left,
+rgba(255,255,255,.4),
+transparent 70%
+);
+
+}
+
+.top-right{
+
+top:0;
+
+right:0;
+
+background:
+
+radial-gradient(
+circle at top right,
+rgba(255,255,255,.4),
+transparent 70%
+);
+
+}
+
+
+
+
+
+/* ====================================
+   GITHUB WIDGET
+==================================== */
+
+.github-widget{
+
+height:340px;
+
+overflow:hidden;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+/* HEADER */
+
+.github-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:10px;
+
+gap:10px;
+
+}
+
+.github-header h3{
+
+margin:0;
+
+font-size:18px;
+
+white-space:nowrap;
+
+}
+
+/* SEARCH */
+
+.github-controls{
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+.github-controls input{
+
+width:130px;
+
+height:34px;
+
+padding:0 12px;
+
+border:none;
+
+outline:none;
+
+border-radius:10px;
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:
+blur(10px);
+
+color:white;
+
+font-size:12px;
+
+}
+
+.github-controls input::placeholder{
+
+color:
+rgba(255,255,255,.5);
+
+}
+
+.github-controls button{
+
+width:34px;
+height:34px;
+
+padding:0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:14px;
+
+}
+
+/* CONTENT */
+
+#githubData{
+
+flex:1;
+
+overflow-y:auto;
+
+padding-right:4px;
+
+}
+
+/* PROFILE */
+
+.github-profile{
+
+text-align:center;
+
+}
+
+.github-avatar{
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+margin-bottom:8px;
+
+border:2px solid
+rgba(255,255,255,.15);
+
+box-shadow:
+0 0 12px rgba(0,102,255,.2);
+
+}
+
+.github-profile h3{
+
+font-size:15px;
+
+margin-bottom:4px;
+
+}
+
+.github-profile p{
+
+font-size:12px;
+
+opacity:.8;
+
+margin:2px 0;
+
+}
+
+.github-bio{
+
+display:none;
+
+}
+
+/* STATS */
+
+.github-stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:6px;
+
+margin:10px 0;
+
+}
+
+.github-stats div{
+
+padding:6px;
+
+font-size:11px;
+
+border-radius:10px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+/* GRAPH */
+
+.github-graph{
+
+width:100%;
+
+height:70px;
+
+object-fit:cover;
+
+margin-top:8px;
+
+border-radius:10px;
+
+}
+
+/* REPOSITORIES */
+
+.github-repos{
+
+margin-top:8px;
+
+max-height:90px;
+
+overflow-y:auto;
+
+}
+
+.repo-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:6px;
+
+font-size:11px;
+
+margin-top:4px;
+
+border-radius:8px;
+
+background:
+rgba(255,255,255,.05);
+
+}
+
+.repo-item a{
+
+text-decoration:none;
+
+color:white;
+
+max-width:75%;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+}
+
+/* SCROLLBAR */
+
+#githubData::-webkit-scrollbar,
+.github-repos::-webkit-scrollbar{
+
+width:4px;
+
+}
+
+#githubData::-webkit-scrollbar-thumb,
+.github-repos::-webkit-scrollbar-thumb{
+
+background:
+rgba(255,255,255,.15);
+
+border-radius:20px;
+
+}
+
+
+
+
+
+
+
+
+/* ====================================
+   MUSIC HUB WIDGET
+==================================== */
+/* ====================================
+   MUSIC HUB
+==================================== */
+
+.music-widget{
+
+height:340px;
+
+display:flex;
+
+flex-direction:column;
+
+overflow:hidden;
+
+}
+
+/* ====================================
+   HEADER
+==================================== */
+
+.music-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:10px;
+
+}
+
+.music-header h3{
+
+margin:0;
+
+font-size:18px;
+
+font-weight:700;
+
+}
+
+.music-status{
+
+font-size:12px;
+
+opacity:.7;
+
+}
+
+/* ====================================
+   SEARCH
+==================================== */
+
+.music-search{
+
+display:flex;
+
+gap:8px;
+
+margin-bottom:12px;
+
+}
+
+.music-search input{
+
+flex:1;
+
+height:38px;
+
+padding:0 14px;
+
+border:none;
+
+outline:none;
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:
+blur(12px);
+
+color:white;
+
+font-size:13px;
+
+}
+
+.music-search input::placeholder{
+
+color:
+rgba(255,255,255,.5);
+
+}
+
+.music-search button{
+
+width:40px;
+height:38px;
+
+padding:0;
+
+border-radius:14px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:15px;
+
+}
+
+/* ====================================
+   MAIN SECTION
+==================================== */
+
+.music-main{
+
+display:grid;
+
+grid-template-columns:
+2.3fr 1fr;
+
+gap:12px;
+
+height:150px;
+
+margin-bottom:12px;
+
+}
+
+/* ====================================
+   SONG CARD
+==================================== */
+
+.now-playing{
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.06);
+
+border-radius:18px;
+
+padding:10px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:flex-start;
+
+}
+
+#songThumbnail{
+
+width:100%;
+
+height:70px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+margin-bottom:8px;
+
+}
+.song-title{
+
+font-size:13px;
+
+font-weight:700;
+
+margin-top:2px;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+.song-artist{
+
+font-size:11px;
+
+opacity:.7;
+
+margin-top:2px;
+
+}
+.song-title{
+
+font-size:14px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+margin-bottom:4px;
+
+}
+
+.song-artist{
+
+font-size:12px;
+
+opacity:.75;
+
+}
+
+/* ====================================
+   VISUALIZER CARD
+==================================== */
+
+.visualizer-card{
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.06);
+
+border-radius:18px;
+
+padding:12px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+/* ====================================
+   VISUALIZER
+==================================== */
+
+.music-visualizer{
+
+height:50px;
+
+display:flex;
+
+align-items:flex-end;
+
+justify-content:center;
+
+gap:3px;
+
+}
+
+.bar{
+
+width:4px;
+
+height:20px;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+to top,
+#ff003c,
+#0066ff
+);
+
+animation:
+musicBeat 1s infinite ease-in-out;
+
+}
+
+.bar:nth-child(2){
+animation-delay:.1s;
+}
+
+.bar:nth-child(3){
+animation-delay:.2s;
+}
+
+.bar:nth-child(4){
+animation-delay:.3s;
+}
+
+.bar:nth-child(5){
+animation-delay:.4s;
+}
+
+.bar:nth-child(6){
+animation-delay:.5s;
+}
+
+.bar:nth-child(7){
+animation-delay:.6s;
+}
+
+@keyframes musicBeat{
+
+0%,100%{
+
+height:12px;
+
+}
+
+50%{
+
+height:55px;
+
+}
+
+}
+
+/* ====================================
+   CONTROLS
+==================================== */
+
+.music-controls{
+
+display:flex;
+
+gap:6px;
+
+width:100%;
+
+justify-content:center;
+
+}
+
+.music-controls button{
+
+width:34px;
+height:34px;
+
+padding:0;
+
+font-size:12px;
+
+border-radius:10px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+/* ====================================
+   SHORTCUTS
+==================================== */
+
+.music-shortcuts{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:10px;
+
+margin-top:auto;
+
+}
+
+.music-shortcuts button{
+
+height:34px;
+
+padding:0;
+
+font-size:13px;
+
+border-radius:12px;
+
+}
+
+/* ====================================
+   HIDDEN PLAYER
+==================================== */
+
+#musicPlayer{
+
+position:absolute;
+
+left:-9999px;
+
+width:0;
+
+height:0;
+
+overflow:hidden;
+
+}
+
+/* ====================================
+   PAUSED STATE
+==================================== */
+
+.music-paused .bar{
+
+animation-play-state:
+paused;
+
+opacity:.4;
+
+}
+
+/* ====================================
+   MOBILE
+==================================== */
+
+@media(max-width:768px){
+
+.music-main{
+
+display:grid;
+
+grid-template-columns:
+2fr 0.9fr;
+
+gap:12px;
+
+height:120px;
+
+}
+
+.visualizer-card{
+
+height:120px;
+
+}
+
+}
+
+#youtubePlayer{
+
+position:absolute;
+
+left:-9999px;
+
+width:1px;
+
+height:1px;
+
+opacity:0;
 
 }

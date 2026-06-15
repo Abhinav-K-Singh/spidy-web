@@ -1,284 +1,223 @@
 /* ====================================
-   GITHUB WIDGET
+GITHUB WIDGET
 ==================================== */
 
 const githubInput =
 document.getElementById(
-    "githubUsername"
+"githubUsername"
 );
 
 const githubData =
 document.getElementById(
-    "githubData"
+"githubData"
 );
 
 const githubButton =
 document.getElementById(
-    "loadGithub"
+"loadGithub"
 );
 
 /* ====================================
-   LOAD PROFILE
+LOAD PROFILE
 ==================================== */
 
 async function loadGithubProfile(){
 
-    const username =
-    githubInput.value.trim();
 
-    if(!username){
+const username =
+githubInput.value.trim();
 
-        showToast(
-            "Enter GitHub Username"
+if(!username){
+
+    showToast?.(
+        "Enter GitHub Username"
+    );
+
+    return;
+
+}
+
+GithubStorage?.saveUsername?.(
+    username
+);
+
+githubData.innerHTML =
+
+`
+<div class="github-loading">
+    Loading GitHub Profile...
+</div>
+`;
+
+try{
+
+    const response =
+    await fetch(
+        `https://api.github.com/users/${username}`
+    );
+
+    if(!response.ok){
+
+        throw new Error(
+            "User Not Found"
         );
-
-        return;
 
     }
 
-    GithubStorage.saveUsername(
-        username
+    const user =
+    await response.json();
+
+    renderGithubProfile(
+        user
     );
+
+}
+
+catch(error){
 
     githubData.innerHTML =
 
     `
-    Loading GitHub Profile...
+    <p>
+        GitHub User Not Found
+    </p>
     `;
 
-    try{
+    console.error(
+        error
+    );
 
-        const response =
-        await fetch(
+}
 
-            `https://api.github.com/users/${username}`
-
-        );
-
-        if(!response.ok){
-
-            throw new Error(
-                "User Not Found"
-            );
-
-        }
-
-        const user =
-        await response.json();
-
-        renderGithubProfile(
-            user
-        );
-
-    }
-
-    catch(error){
-
-        githubData.innerHTML =
-
-        `
-        <p>
-        GitHub User Not Found
-        </p>
-        `;
-
-        console.error(error);
-
-    }
 
 }
 
 /* ====================================
-   RENDER PROFILE
+RENDER PROFILE
 ==================================== */
 
 function renderGithubProfile(user){
 
-    githubData.innerHTML =
 
-    `
-    <div class="github-profile">
+githubData.innerHTML =
 
-        <img
-        src="${user.avatar_url}"
-        class="github-avatar"
-        alt="Avatar">
+`
+<div class="github-profile">
 
-        <h3>
+    <img
+    src="${user.avatar_url}"
+    class="github-avatar"
+    alt="Avatar">
+
+    <h3>
         ${user.name || user.login}
-        </h3>
+    </h3>
 
-        <p>
+    <p>
         @${user.login}
-        </p>
+    </p>
 
-        <div class="github-stats">
+    <p class="github-bio">
+        ${user.bio || ""}
+    </p>
 
-            <div>
+    <div class="github-stats">
 
-                📦
-                ${user.public_repos}
-
-                Repos
-
-            </div>
-
-            <div>
-
-                👥
-                ${user.followers}
-
-                Followers
-
-            </div>
-
-            <div>
-
-                ❤️
-                ${user.following}
-
-                Following
-
-            </div>
-
+        <div>
+            📦
+            ${user.public_repos}
+            Repos
         </div>
 
-        <a
+        <div>
+            👥
+            ${user.followers}
+            Followers
+        </div>
 
-        href="${user.html_url}"
-
-        target="_blank"
-
-        class="github-link"
-
-        >
-
-        Open Profile
-
-        </a>
+        <div>
+            ❤️
+            ${user.following}
+            Following
+        </div>
 
     </div>
-    `;
+
+    <a
+    href="${user.html_url}"
+    target="_blank"
+    class="github-link">
+
+    Open Profile
+
+    </a>
+
+    ${renderContributionGraph(
+        user.login
+    )}
+
+</div>
+`;
+
 
 }
 
 /* ====================================
-   CONTRIBUTION GRAPH
+CONTRIBUTION GRAPH
 ==================================== */
 
 function renderContributionGraph(username){
 
-    return
 
-    `
-    <img
+return `
+<img
+src="https://ghchart.rshah.org/${username}"
+alt="GitHub Graph"
+class="github-graph">
+`;
 
-    src="https://ghchart.rshah.org/${username}"
-
-    alt="GitHub Graph"
-
-    class="github-graph"
-
-    >
-    `;
 
 }
 
 /* ====================================
-   LOAD SAVED USER
-==================================== */
-
-function loadSavedGithubUser(){
-
-    const username =
-
-    GithubStorage.getUsername();
-
-    if(!username)
-    return;
-
-    githubInput.value =
-    username;
-
-    loadGithubProfile();
-
-}
-
-/* ====================================
-   BUTTON EVENT
-==================================== */
-
-githubButton?.addEventListener(
-
-    "click",
-
-    loadGithubProfile
-
-);
-
-/* ====================================
-   ENTER KEY
-==================================== */
-
-githubInput?.addEventListener(
-
-    "keypress",
-
-    e=>{
-
-        if(
-            e.key === "Enter"
-        ){
-
-            loadGithubProfile();
-
-        }
-
-    }
-
-);
-
-/* ====================================
-   REPOSITORIES
+REPOSITORIES
 ==================================== */
 
 async function loadRepositories(username){
 
-    try{
 
-        const response =
-        await fetch(
+try{
 
-            `https://api.github.com/users/${username}/repos?sort=updated&per_page=5`
+    const response =
+    await fetch(
 
-        );
+        `https://api.github.com/users/${username}/repos?sort=updated&per_page=5`
 
-        const repos =
-        await response.json();
+    );
 
-        let html =
+    const repos =
+    await response.json();
+
+    let html =
+
+    `
+    <div class="github-repos">
+
+    <h4>
+    Recent Repositories
+    </h4>
+    `;
+
+    repos.forEach(repo=>{
+
+        html +=
 
         `
-        <div class="github-repos">
-        <h4>
-        Recent Repositories
-        </h4>
-        `;
-
-        repos.forEach(repo=>{
-
-            html +=
-
-            `
-            <div class="repo-item">
+        <div class="repo-item">
 
             <a
-
             href="${repo.html_url}"
-
-            target="_blank"
-
-            >
+            target="_blank">
 
             ${repo.name}
 
@@ -286,57 +225,121 @@ async function loadRepositories(username){
 
             ⭐ ${repo.stargazers_count}
 
-            </div>
-            `;
+        </div>
+        `;
 
-        });
+    });
 
-        html +=
-        "</div>";
+    html +=
+    "</div>";
 
-        githubData.innerHTML +=
-        html;
-
-    }
-
-    catch(error){
-
-        console.error(
-            error
-        );
-
-    }
+    githubData.innerHTML +=
+    html;
 
 }
 
-/* ====================================
-   ENHANCED PROFILE
-==================================== */
+catch(error){
 
-async function loadFullGithubProfile(){
-
-    const username =
-    githubInput.value.trim();
-
-    if(!username)
-    return;
-
-    await loadGithubProfile();
-
-    await loadRepositories(
-        username
+    console.error(
+        error
     );
 
 }
 
+
+}
+
 /* ====================================
-   STYLES
+FULL PROFILE
+==================================== */
+
+async function loadFullGithubProfile(){
+
+
+const username =
+githubInput.value.trim();
+
+if(!username)
+return;
+
+await loadGithubProfile();
+
+await loadRepositories(
+    username
+);
+
+
+}
+
+/* ====================================
+DEFAULT USER
+==================================== */
+
+function loadSavedGithubUser(){
+
+
+const username =
+
+GithubStorage?.getUsername?.()
+
+||
+
+"Abhinav-K-Singh";
+
+githubInput.value =
+username;
+
+loadFullGithubProfile();
+
+
+}
+
+/* ====================================
+BUTTON
+==================================== */
+
+githubButton?.addEventListener(
+
+
+"click",
+
+loadFullGithubProfile
+
+
+);
+
+/* ====================================
+ENTER KEY
+==================================== */
+
+githubInput?.addEventListener(
+
+
+"keypress",
+
+e=>{
+
+    if(
+        e.key === "Enter"
+    ){
+
+        loadFullGithubProfile();
+
+    }
+
+}
+
+
+);
+
+/* ====================================
+STYLES
 ==================================== */
 
 const githubStyle =
 
 document.createElement(
-    "style"
+"style"
 );
 
 githubStyle.innerHTML =
@@ -350,12 +353,30 @@ text-align:center;
 
 .github-avatar{
 
-width:90px;
-height:90px;
+width:110px;
+height:110px;
 
 border-radius:50%;
 
-margin-bottom:10px;
+margin-bottom:15px;
+
+border:3px solid
+rgba(255,255,255,.15);
+
+box-shadow:
+
+0 0 20px
+rgba(0,102,255,.25);
+
+}
+
+.github-bio{
+
+opacity:.8;
+
+margin:10px 0;
+
+font-size:14px;
 
 }
 
@@ -365,7 +386,7 @@ display:flex;
 
 justify-content:space-around;
 
-margin:15px 0;
+margin:20px 0;
 
 }
 
@@ -373,9 +394,15 @@ margin:15px 0;
 
 display:inline-block;
 
-margin-top:10px;
+margin-top:12px;
 
 text-decoration:none;
+
+}
+
+.github-repos{
+
+margin-top:20px;
 
 }
 
@@ -385,11 +412,11 @@ display:flex;
 
 justify-content:space-between;
 
+padding:10px;
+
 margin-top:8px;
 
-padding:8px;
-
-border-radius:8px;
+border-radius:10px;
 
 background:
 rgba(255,255,255,.05);
@@ -408,24 +435,35 @@ color:inherit;
 
 width:100%;
 
-margin-top:15px;
+margin-top:20px;
 
 border-radius:12px;
 
 }
-
 `;
 
 document.head.appendChild(
-    githubStyle
+githubStyle
 );
 
 /* ====================================
-   INITIALIZE
+INIT
 ==================================== */
 
-loadSavedGithubUser();
+window.addEventListener(
+
+
+"DOMContentLoaded",
+
+()=>{
+
+    loadSavedGithubUser();
+
+}
+
+
+);
 
 console.log(
-    "📊 GitHub Widget Loaded"
+"📊 GitHub Widget Loaded"
 );

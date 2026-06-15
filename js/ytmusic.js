@@ -1,265 +1,554 @@
 /* ====================================
-   YT MUSIC WIDGET
+SPIDY MUSIC HUB V2
 ==================================== */
 
-const musicWidget =
-document.getElementById(
-    "spotifyWidget"
+const YT_API_KEY = "AIzaSyBhhEtNh-A2WQYCxzjRiNMks4ASWTgWrYw";
+
+/* ====================================
+ELEMENTS
+==================================== */
+
+const musicSearch = document.getElementById("musicSearch");
+const playSongBtn = document.getElementById("playSong");
+
+const songThumbnail = document.getElementById("songThumbnail");
+const songTitle = document.getElementById("songTitle");
+const songArtist = document.getElementById("songArtist");
+
+const musicStatus = document.querySelector(".music-status");
+
+const randomBtn = document.getElementById("randomSong");
+const favoriteBtn = document.getElementById("favoriteSong");
+const historyBtn = document.getElementById("historySong");
+
+const pauseBtn = document.getElementById("pauseSong");
+const prevBtn = document.getElementById("prevSong");
+const nextBtn = document.getElementById("nextSong");
+
+/* ====================================
+PLAYER
+==================================== */
+
+let player = null;
+let playerReady = false;
+
+let currentVideoId = "";
+let currentSong = "";
+
+let paused = false;
+
+/* ====================================
+STORAGE
+==================================== */
+
+let favorites =
+JSON.parse(
+localStorage.getItem("musicFavorites") || "[]"
+);
+
+let history =
+JSON.parse(
+localStorage.getItem("musicHistory") || "[]"
 );
 
 /* ====================================
-   DEFAULT PLAYLIST
+SONG POOL
 ==================================== */
 
-const DEFAULT_PLAYLIST =
+const randomSongs = [
 
-"https://music.youtube.com/watch?v=jfKfPfyJRdk";
+"Faded Alan Walker",
+"The Spectre",
+"Alone Alan Walker",
+"Believer Imagine Dragons",
+"Starboy",
+"Blinding Lights",
+"Heat Waves",
+"Perfect Ed Sheeran",
+"Night Changes",
+"Closer",
+"Animals Martin Garrix",
+"Unity TheFatRat",
+"Legends Never Die"
+
+];
 
 /* ====================================
-   CONVERT URL
+YOUTUBE PLAYER API
 ==================================== */
 
-function getEmbedUrl(url){
+function onYouTubeIframeAPIReady(){
 
-    try{
+player = new YT.Player(
 
-        if(url.includes("watch?v=")){
+"youtubePlayer",
 
-            const id =
-            url.split("watch?v=")[1]
-            .split("&")[0];
+{
 
-            return
-            `https://www.youtube.com/embed/${id}`;
+height:"1",
+width:"1",
 
-        }
+playerVars:{
 
-        return null;
+autoplay:1,
+controls:0,
+rel:0
 
-    }
+},
 
-    catch{
+events:{
 
-        return null;
+onReady:()=>{
 
-    }
-
-}
-
-/* ====================================
-   LOAD PLAYER
-==================================== */
-
-function loadYTMusic(){
-
-    const url =
-
-    Storage.load(
-        "ytmusic_url"
-    ) ||
-
-    DEFAULT_PLAYLIST;
-
-    renderYTMusic(
-        url
-    );
-
-}
-
-/* ====================================
-   RENDER
-==================================== */
-
-function renderYTMusic(url){
-
-    const embedUrl =
-    getEmbedUrl(url);
-
-    if(!embedUrl){
-
-        musicWidget.innerHTML =
-
-        `
-        Invalid YouTube URL
-        `;
-
-        return;
-
-    }
-
-    musicWidget.innerHTML =
-
-    `
-    <iframe
-
-    width="100%"
-
-    height="320"
-
-    src="${embedUrl}"
-
-    title="YT Music"
-
-    frameborder="0"
-
-    allowfullscreen
-
-    >
-
-    </iframe>
-
-    <div class="yt-actions">
-
-        <button
-        onclick="changeYTMusic()">
-
-        Change Music
-
-        </button>
-
-    </div>
-
-    `;
-
-}
-
-/* ====================================
-   CHANGE URL
-==================================== */
-
-function changeYTMusic(){
-
-    const url = prompt(
-
-        "Paste YouTube Music / YouTube URL"
-
-    );
-
-    if(!url)
-    return;
-
-    Storage.save(
-
-        "ytmusic_url",
-
-        url
-
-    );
-
-    renderYTMusic(
-        url
-    );
-
-    showToast(
-        "Music Updated"
-    );
-
-}
-
-/* ====================================
-   PRESETS
-==================================== */
-
-const MusicPresets = {
-
-    lofi:
-    "https://www.youtube.com/watch?v=jfKfPfyJRdk",
-
-    coding:
-    "https://www.youtube.com/watch?v=4xDzrJKXOOY",
-
-    synthwave:
-    "https://www.youtube.com/watch?v=MVPTGNGiI-4",
-
-    travel:
-    "https://www.youtube.com/watch?v=DWcJFNfaw9c"
-
-};
-
-/* ====================================
-   LOAD PRESET
-==================================== */
-
-function loadMusicPreset(type){
-
-    const url =
-    MusicPresets[type];
-
-    if(!url)
-    return;
-
-    Storage.save(
-        "ytmusic_url",
-        url
-    );
-
-    renderYTMusic(
-        url
-    );
-
-}
-
-/* ====================================
-   MINI MODE
-==================================== */
-
-function toggleMiniPlayer(){
-
-    const iframe =
-    musicWidget.querySelector(
-        "iframe"
-    );
-
-    if(!iframe)
-    return;
-
-    iframe.height =
-
-    iframe.height === "320"
-    ? "150"
-    : "320";
-
-}
-
-/* ====================================
-   STYLE
-==================================== */
-
-const style =
-document.createElement(
-    "style"
-);
-
-style.innerHTML =
-
-`
-.yt-actions{
-
-display:flex;
-
-justify-content:center;
-
-margin-top:10px;
-
-}
-
-.yt-actions button{
-
-padding:10px 16px;
-
-}
-`;
-
-document.head.appendChild(
-    style
-);
-
-/* ====================================
-   INIT
-==================================== */
-
-loadYTMusic();
+playerReady = true;
 
 console.log(
-    "🎵 YouTube Music Loaded"
+"🎵 Player Ready"
+);
+
+},
+
+onStateChange:
+onPlayerStateChange
+
+}
+
+}
+
+);
+
+}
+
+window.onYouTubeIframeAPIReady =
+onYouTubeIframeAPIReady;
+
+/* ====================================
+PLAYER STATE
+==================================== */
+
+function onPlayerStateChange(event){
+
+const widget =
+document.querySelector(
+".music-widget"
+);
+
+if(!widget)
+return;
+
+if(
+event.data ===
+YT.PlayerState.PLAYING
+){
+
+widget.classList.remove(
+"music-paused"
+);
+
+}
+
+if(
+event.data ===
+YT.PlayerState.PAUSED
+){
+
+widget.classList.add(
+"music-paused"
+);
+
+}
+
+}
+
+/* ====================================
+SEARCH
+==================================== */
+
+async function searchYouTube(song){
+
+try{
+
+musicStatus.textContent =
+"Searching...";
+
+const response =
+await fetch(
+
+`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&maxResults=1&q=${encodeURIComponent(song)}&key=${YT_API_KEY}`
+
+);
+
+const data =
+await response.json();
+
+if(
+!data.items ||
+!data.items.length
+){
+
+musicStatus.textContent =
+"Not Found";
+
+return;
+
+}
+
+const video =
+data.items[0];
+
+currentSong =
+video.snippet.title;
+
+currentVideoId =
+video.id.videoId;
+
+displaySong(video);
+
+saveHistory(
+video.snippet.title
+);
+
+}
+catch(error){
+
+console.error(error);
+
+musicStatus.textContent =
+"API Error";
+
+}
+
+}
+
+/* ====================================
+DISPLAY
+==================================== */
+
+function displaySong(video){
+
+songThumbnail.src =
+video.snippet.thumbnails.high.url;
+
+songTitle.textContent =
+video.snippet.title;
+
+songArtist.textContent =
+video.snippet.channelTitle;
+
+musicStatus.textContent =
+"Ready";
+
+playVideo(
+video.id.videoId
+);
+
+}
+
+/* ====================================
+PLAY VIDEO
+==================================== */
+
+function playVideo(videoId){
+
+if(
+!playerReady ||
+!player
+)
+return;
+
+currentVideoId =
+videoId;
+
+player.loadVideoById(
+videoId
+);
+
+paused = false;
+
+if(pauseBtn){
+
+pauseBtn.textContent =
+"⏸";
+
+}
+
+}
+
+/* ====================================
+FAVORITES
+==================================== */
+
+function saveFavorite(){
+
+if(!currentSong)
+return;
+
+if(
+favorites.includes(
+currentSong
+)
+)
+return;
+
+favorites.push(
+currentSong
+);
+
+localStorage.setItem(
+
+"musicFavorites",
+
+JSON.stringify(
+favorites
+)
+
+);
+
+alert(
+"❤️ Added To Favorites"
+);
+
+}
+
+/* ====================================
+HISTORY
+==================================== */
+
+function saveHistory(song){
+
+history.unshift(song);
+
+history =
+history.slice(0,15);
+
+localStorage.setItem(
+
+"musicHistory",
+
+JSON.stringify(
+history
+)
+
+);
+
+}
+
+function showHistory(){
+
+alert(
+
+history.length
+
+?
+
+history.join("\n")
+
+:
+
+"No History"
+
+);
+
+}
+
+function showFavorites(){
+
+alert(
+
+favorites.length
+
+?
+
+favorites.join("\n")
+
+:
+
+"No Favorites"
+
+);
+
+}
+
+/* ====================================
+RANDOM
+==================================== */
+
+function playRandomSong(){
+
+const song =
+
+randomSongs[
+
+Math.floor(
+Math.random()
+*
+randomSongs.length
+)
+
+];
+
+musicSearch.value =
+song;
+
+searchYouTube(song);
+
+}
+
+/* ====================================
+CONTROLS
+==================================== */
+
+pauseBtn?.addEventListener(
+
+"click",
+
+()=>{
+
+if(
+!playerReady ||
+!player
+)
+return;
+
+if(paused){
+
+player.playVideo();
+
+pauseBtn.textContent =
+"⏸";
+
+}
+else{
+
+player.pauseVideo();
+
+pauseBtn.textContent =
+"▶";
+
+}
+
+paused = !paused;
+
+}
+
+);
+
+prevBtn?.addEventListener(
+
+"click",
+
+()=>{
+
+if(
+history.length < 2
+)
+return;
+
+history.shift();
+
+const previousSong =
+history[0];
+
+musicSearch.value =
+previousSong;
+
+searchYouTube(
+previousSong
+);
+
+}
+
+);
+
+nextBtn?.addEventListener(
+
+"click",
+
+playRandomSong
+
+);
+
+/* ====================================
+SEARCH BUTTON
+==================================== */
+
+playSongBtn?.addEventListener(
+
+"click",
+
+()=>{
+
+const song =
+musicSearch.value.trim();
+
+if(!song)
+return;
+
+searchYouTube(song);
+
+}
+
+);
+
+musicSearch?.addEventListener(
+
+"keypress",
+
+e=>{
+
+if(
+e.key === "Enter"
+){
+
+playSongBtn.click();
+
+}
+
+}
+
+);
+
+/* ====================================
+SHORTCUTS
+==================================== */
+
+randomBtn?.addEventListener(
+"click",
+playRandomSong
+);
+
+favoriteBtn?.addEventListener(
+"click",
+saveFavorite
+);
+
+historyBtn?.addEventListener(
+"click",
+showHistory
+);
+
+/* ====================================
+INIT
+==================================== */
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+setTimeout(()=>{
+
+searchYouTube(
+"Faded Alan Walker"
+);
+
+},1500);
+
+}
+
+);
+
+console.log(
+"🎵 Spidy Music Hub V2 Loaded"
 );
