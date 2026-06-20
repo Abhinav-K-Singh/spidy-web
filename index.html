@@ -42,6 +42,13 @@ content="width=device-width, initial-scale=1.0">
 
 
 <aside id="sidebar">
+    <div id="sidebar-toggle">
+
+    <span class="toggle-icon">
+        ☰
+    </span>
+
+</div>
 
     <!-- Logo Section -->
     <div class="sidebar-header">
@@ -57,114 +64,180 @@ content="width=device-width, initial-scale=1.0">
     </div>
 
     <!-- Navigation -->
-    <nav id="sidebar-nav">
+<nav id="sidebar-nav">
 
-        <div class="nav-item active">
+    <!-- Dashboard -->
 
-            <span class="nav-icon">
-                🏠
-            </span>
+    <div class="nav-item active" data-page="dashboard">
 
-            <span class="nav-text">
-                Dashboard
-            </span>
+        <span class="nav-icon">🏠</span>
 
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                🌐
-            </span>
-
-            <span class="nav-text">
-                GitHub
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                💻
-            </span>
-
-            <span class="nav-text">
-                Coding
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                🤖
-            </span>
-
-            <span class="nav-text">
-                AI
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                🎬
-            </span>
-
-            <span class="nav-text">
-                Creator
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                📝
-            </span>
-
-            <span class="nav-text">
-                Notes
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                ✅
-            </span>
-
-            <span class="nav-text">
-                Todo
-            </span>
-
-        </div>
-
-        <div class="nav-item">
-
-            <span class="nav-icon">
-                ⚙
-            </span>
-
-            <span class="nav-text">
-                Settings
-            </span>
-
-        </div>
-
-    </nav>
-
-    <!-- Bottom Toggle -->
-    <div id="sidebar-toggle">
-
-        <span class="toggle-icon">
-            ☰
+        <span class="nav-text">
+            Dashboard
         </span>
 
     </div>
+
+    <!-- Creator Mode -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">🎨</span>
+
+        <span class="nav-text">
+            Creator
+        </span>
+
+        <div class="submenu">
+
+            <div class="submenu-item"
+                 id="changeColors">
+
+                🎨 Button Colors
+
+            </div>
+
+            <div class="submenu-item"
+                 id="changeGlass">
+
+                🪟 Glass Opacity
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- YouTube -->
+
+    <div class="nav-item"
+         id="youtubeBtn">
+
+        <span class="nav-icon">▶️</span>
+
+        <span class="nav-text">
+
+            YouTube
+
+        </span>
+
+    </div>
+
+    <!-- Coding -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">💻</span>
+
+        <span class="nav-text">
+
+            Coding
+
+        </span>
+
+        <div
+        class="submenu"
+        id="codingMenu">
+
+        </div>
+
+    </div>
+
+    <!-- Social -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">🌍</span>
+
+        <span class="nav-text">
+
+            Social
+
+        </span>
+
+        <div
+        class="submenu"
+        id="socialMenu">
+
+        </div>
+
+    </div>
+
+    <!-- Jobs -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">💼</span>
+
+        <span class="nav-text">
+
+            Jobs
+
+        </span>
+
+        <div
+        class="submenu"
+        id="jobMenu">
+
+        </div>
+
+    </div>
+
+    <!-- Entertainment -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">🎬</span>
+
+        <span class="nav-text">
+
+            Entertainment
+
+        </span>
+
+        <div
+        class="submenu"
+        id="entertainmentMenu">
+
+        </div>
+
+    </div>
+
+    <!-- Shopping -->
+
+    <div class="nav-item has-submenu">
+
+        <span class="nav-icon">🛒</span>
+
+        <span class="nav-text">
+
+            Shop
+
+        </span>
+
+        <div
+        class="submenu"
+        id="shopMenu">
+
+        </div>
+
+    </div>
+
+    <!-- Settings -->
+
+    <div class="nav-item">
+
+        <span class="nav-icon">⚙️</span>
+
+        <span class="nav-text">
+
+            Settings
+
+        </span>
+
+    </div>
+
+</nav>
 
 </aside>
 

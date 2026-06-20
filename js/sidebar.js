@@ -1,381 +1,500 @@
 /* ====================================
-   SIDEBAR CONTROLLER
+   SPIDY SIDEBAR V2
 ==================================== */
 
 const sidebar =
 document.getElementById(
-    "sidebar"
+"sidebar"
 );
 
 const sidebarToggle =
 document.getElementById(
-    "sidebar-toggle"
-);
-
-const navItems =
-document.querySelectorAll(
-    ".nav-item"
+"sidebar-toggle"
 );
 
 /* ====================================
-   LOAD SAVED STATE
+   COLLAPSE / EXPAND
 ==================================== */
 
-loadSidebarState();
+sidebarToggle?.addEventListener(
 
-function loadSidebarState(){
+"click",
 
-    const collapsed =
-    Storage.load(
-        "sidebar_collapsed"
-    );
+()=>{
 
-    if(collapsed){
+sidebar.classList.toggle(
+"collapsed"
+);
 
-        sidebar.classList.add(
-            "collapsed"
-        );
+localStorage.setItem(
 
-    }
+"sidebarCollapsed",
+
+sidebar.classList.contains(
+"collapsed"
+)
+
+);
+
+}
+
+);
+
+/* ====================================
+   RESTORE STATE
+==================================== */
+
+if(
+
+localStorage.getItem(
+"sidebarCollapsed"
+)
+
+===
+
+"true"
+
+){
+
+sidebar.classList.add(
+"collapsed"
+);
 
 }
 
 /* ====================================
-   COLLAPSE TOGGLE
+   YOUTUBE BUTTON
 ==================================== */
 
-sidebarToggle.addEventListener(
-    "click",
-    ()=>{
+document
+.getElementById(
+"youtubeBtn"
+)
+?.addEventListener(
 
-        sidebar.classList.toggle(
-            "collapsed"
-        );
+"click",
 
-        Storage.save(
-            "sidebar_collapsed",
+()=>{
 
-            sidebar.classList.contains(
-                "collapsed"
-            )
-        );
+window.open(
 
-    }
+"https://youtube.com",
+
+"_blank"
+
 );
-
-/* ====================================
-   ACTIVE NAVIGATION
-==================================== */
-
-loadActiveNav();
-
-function loadActiveNav(){
-
-    const active =
-    Storage.load(
-        "active_nav"
-    ) || "Dashboard";
-
-    navItems.forEach(item=>{
-
-        const text =
-        item.innerText.trim();
-
-        if(
-            text.includes(active)
-        ){
-
-            item.classList.add(
-                "active"
-            );
-
-        }
-
-    });
 
 }
 
-navItems.forEach(item=>{
+);
 
-    item.addEventListener(
-        "click",
-        ()=>{
+/* ====================================
+   PLATFORM DATA
+==================================== */
 
-            navItems.forEach(nav=>{
+const platforms = {
 
-                nav.classList.remove(
-                    "active"
-                );
+coding:[
 
-            });
+{
+name:"LeetCode",
+icon:"🧩",
+url:"https://leetcode.com"
+},
 
-            item.classList.add(
-                "active"
-            );
+{
+name:"GitHub",
+icon:"🌐",
+url:"https://github.com"
+},
 
-            Storage.save(
-                "active_nav",
+{
+name:"HackerRank",
+icon:"🏆",
+url:"https://hackerrank.com"
+},
 
-                item.innerText.trim()
-            );
+{
+name:"Codeforces",
+icon:"⚡",
+url:"https://codeforces.com"
+}
 
-            handleNavigation(
-                item.innerText.trim()
-            );
+],
 
-        }
-    );
+social:[
+
+{
+name:"Instagram",
+icon:"📸",
+url:"https://instagram.com"
+},
+
+{
+name:"LinkedIn",
+icon:"💼",
+url:"https://linkedin.com"
+},
+
+{
+name:"X",
+icon:"🐦",
+url:"https://x.com"
+},
+
+{
+name:"Facebook",
+icon:"📘",
+url:"https://facebook.com"
+}
+
+],
+
+jobs:[
+
+{
+name:"LinkedIn Jobs",
+icon:"💼",
+url:"https://linkedin.com/jobs"
+},
+
+{
+name:"Naukri",
+icon:"🇮🇳",
+url:"https://naukri.com"
+},
+
+{
+name:"Indeed",
+icon:"📋",
+url:"https://indeed.com"
+}
+
+],
+
+entertainment:[
+
+{
+name:"Netflix",
+icon:"🎬",
+url:"https://netflix.com"
+},
+
+{
+name:"Prime Video",
+icon:"📺",
+url:"https://primevideo.com"
+},
+
+{
+name:"Spotify",
+icon:"🎵",
+url:"https://spotify.com"
+},
+
+{
+name:"Hotstar",
+icon:"⭐",
+url:"https://hotstar.com"
+}
+
+],
+
+shop:[
+
+{
+name:"Amazon",
+icon:"📦",
+url:"https://amazon.in"
+},
+
+{
+name:"Flipkart",
+icon:"🛒",
+url:"https://flipkart.com"
+},
+
+{
+name:"Myntra",
+icon:"👕",
+url:"https://myntra.com"
+}
+
+]
+
+};
+
+/* ====================================
+   BUILD MENUS
+==================================== */
+
+function buildMenu(
+
+menuId,
+items
+
+){
+
+const menu =
+
+document.getElementById(
+menuId
+);
+
+if(!menu)
+return;
+
+menu.innerHTML = "";
+
+items.forEach(item=>{
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"submenu-item";
+
+div.innerHTML =
+
+`
+${item.icon}
+${item.name}
+`;
+
+div.addEventListener(
+
+"click",
+
+()=>{
+
+window.open(
+
+item.url,
+
+"_blank"
+
+);
+
+}
+
+);
+
+menu.appendChild(
+div
+);
+
+});
+
+}
+
+/* ====================================
+   INIT MENUS
+==================================== */
+
+buildMenu(
+"codingMenu",
+platforms.coding
+);
+
+buildMenu(
+"socialMenu",
+platforms.social
+);
+
+buildMenu(
+"jobMenu",
+platforms.jobs
+);
+
+buildMenu(
+"entertainmentMenu",
+platforms.entertainment
+);
+
+buildMenu(
+"shopMenu",
+platforms.shop
+);
+
+/* ====================================
+   ACTIVE NAV
+==================================== */
+
+document
+.querySelectorAll(
+".nav-item"
+)
+.forEach(item=>{
+
+item.addEventListener(
+
+"click",
+
+()=>{
+
+document
+.querySelectorAll(
+".nav-item"
+)
+.forEach(nav=>{
+
+nav.classList.remove(
+"active"
+);
+
+});
+
+item.classList.add(
+"active"
+);
+
+}
+
+);
 
 });
 
 /* ====================================
-   NAVIGATION ROUTER
+   CREATOR MODE
 ==================================== */
 
-function handleNavigation(name){
+document
+.getElementById(
+"changeColors"
+)
+?.addEventListener(
 
-    const folderContainer =
-    document.getElementById(
-        "folderContainer"
-    );
+"click",
 
-    switch(true){
+()=>{
 
-        case name.includes(
-            "Dashboard"
-        ):
+const color =
 
-            scrollToTop();
-            break;
+prompt(
 
-        case name.includes(
-            "GitHub"
-        ):
+"Enter Hex Color",
 
-            document
-            .getElementById(
-                "githubUsername"
-            )
-            ?.focus();
+"#ff003c"
 
-            break;
+);
 
-        case name.includes(
-            "Notes"
-        ):
+if(!color)
+return;
 
-            document
-            .getElementById(
-                "quickNotes"
-            )
-            ?.focus();
+document
+.documentElement
+.style.setProperty(
 
-            break;
+"--red",
 
-        case name.includes(
-            "Todo"
-        ):
+color
 
-            document
-            .getElementById(
-                "quickTodo"
-            )
-            ?.scrollIntoView({
+);
 
-                behavior:
-                "smooth"
-
-            });
-
-            break;
-
-        case name.includes(
-            "Settings"
-        ):
-
-            document
-            .getElementById(
-                "settingsBtn"
-            )
-            ?.click();
-
-            break;
-
-    }
+localStorage.setItem(
+"spidyColor",
+color
+);
 
 }
 
-/* ====================================
-   MOBILE SIDEBAR
-==================================== */
+);
 
-function toggleMobileSidebar(){
+document
+.getElementById(
+"changeGlass"
+)
+?.addEventListener(
 
-    sidebar.classList.toggle(
-        "open"
-    );
+"click",
+
+()=>{
+
+const opacity =
+
+prompt(
+
+"Glass Opacity (0-1)",
+
+"0.08"
+
+);
+
+if(!opacity)
+return;
+
+document
+.documentElement
+.style.setProperty(
+
+"--glass-opacity",
+
+opacity
+
+);
+
+localStorage.setItem(
+
+"glassOpacity",
+
+opacity
+
+);
 
 }
 
-document.addEventListener(
-    "click",
-    e=>{
-
-        if(
-
-            window.innerWidth < 900 &&
-
-            !sidebar.contains(
-                e.target
-            ) &&
-
-            !e.target.closest(
-                "#sidebar-toggle"
-            )
-
-        ){
-
-            sidebar.classList.remove(
-                "open"
-            );
-
-        }
-
-    }
 );
 
 /* ====================================
-   SCROLL TO TOP
+   RESTORE CREATOR SETTINGS
 ==================================== */
 
-function scrollToTop(){
+const savedColor =
 
-    window.scrollTo({
-
-        top:0,
-
-        behavior:
-        "smooth"
-
-    });
-
-}
-
-/* ====================================
-   KEYBOARD SHORTCUTS
-==================================== */
-
-document.addEventListener(
-    "keydown",
-    e=>{
-
-        if(
-
-            e.ctrlKey &&
-            e.key === "b"
-
-        ){
-
-            e.preventDefault();
-
-            sidebar.classList.toggle(
-                "collapsed"
-            );
-
-            Storage.save(
-
-                "sidebar_collapsed",
-
-                sidebar.classList.contains(
-                    "collapsed"
-                )
-
-            );
-
-        }
-
-    }
+localStorage.getItem(
+"spidyColor"
 );
 
-/* ====================================
-   SIDEBAR TOOLTIPS
-==================================== */
+if(savedColor){
 
-function setupTooltips(){
+document
+.documentElement
+.style.setProperty(
 
-    navItems.forEach(item=>{
+"--red",
 
-        item.setAttribute(
+savedColor
 
-            "title",
-
-            item.innerText.trim()
-
-        );
-
-    });
-
-}
-
-setupTooltips();
-
-/* ====================================
-   AUTO COLLAPSE ON SMALL SCREENS
-==================================== */
-
-function checkScreenSize(){
-
-    if(
-        window.innerWidth < 1200
-    ){
-
-        sidebar.classList.add(
-            "collapsed"
-        );
-
-    }
-
-}
-
-checkScreenSize();
-
-window.addEventListener(
-    "resize",
-    checkScreenSize
 );
 
-/* ====================================
-   SPIDER NAV EFFECT
-==================================== */
+}
 
-navItems.forEach(item=>{
+const savedOpacity =
 
-    item.addEventListener(
-        "mouseenter",
-        ()=>{
+localStorage.getItem(
+"glassOpacity"
+);
 
-            item.style.transform =
-            "translateX(6px)";
+if(savedOpacity){
 
-        }
-    );
+document
+.documentElement
+.style.setProperty(
 
-    item.addEventListener(
-        "mouseleave",
-        ()=>{
+"--glass-opacity",
 
-            item.style.transform =
-            "";
+savedOpacity
 
-        }
-    );
+);
 
-});
+}
 
 /* ====================================
-   INITIALIZE
+   READY
 ==================================== */
 
 console.log(
-    "🕷 Sidebar Loaded"
+"🕷 Sidebar V2 Loaded"
 );
