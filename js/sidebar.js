@@ -259,7 +259,7 @@ function buildMenu(menuId, items){
 
     menu.innerHTML = "";
 
-    items.forEach(item=>{
+    items.forEach(item => {
 
         const div =
         document.createElement("div");
@@ -268,12 +268,12 @@ function buildMenu(menuId, items){
         "submenu-item";
 
         // ADD CATEGORY
-        if(item.type==="add-category"){
+        if(item.type === "add-category"){
 
             div.innerHTML =
             `${item.icon} ${item.name}`;
 
-            div.addEventListener("click",()=>{
+            div.addEventListener("click", () => {
 
                 const name =
                 prompt("Category Name");
@@ -281,12 +281,12 @@ function buildMenu(menuId, items){
                 if(!name) return;
 
                 items.splice(
-                    items.length-1,
+                    items.length - 1,
                     0,
                     {
                         type:"folder",
                         icon:"📁",
-                        name,
+                        name:name,
                         children:[]
                     }
                 );
@@ -303,26 +303,23 @@ function buildMenu(menuId, items){
         }
 
         // FOLDER
-        if(item.type==="folder"){
+        if(item.type === "folder"){
 
             div.classList.add(
                 "folder-item"
             );
 
-            div.innerHTML =
-            `
-            <span>
-                ${item.icon}
-                ${item.name}
-            </span>
+            div.innerHTML = `
+                <span>
+                    ${item.icon}
+                    ${item.name}
+                </span>
 
-            <span>▶</span>
+                <span>▶</span>
             `;
 
             const nested =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
             nested.className =
             "nested-submenu";
@@ -343,17 +340,22 @@ function buildMenu(menuId, items){
 
         // LINK
         div.innerHTML =
-        `
-        ${item.icon}
-        ${item.name}
-        `;
+        `${item.icon} ${item.name}`;
 
         div.addEventListener(
             "click",
-            ()=>window.open(
-                item.url,
-                "_blank"
-            )
+            () => {
+
+                if(item.url){
+
+                    window.open(
+                        item.url,
+                        "_blank"
+                    );
+
+                }
+
+            }
         );
 
         menu.appendChild(div);
