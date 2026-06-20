@@ -153,21 +153,48 @@ url:"https://facebook.com"
 jobs:[
 
 {
-name:"LinkedIn Jobs",
+type:"folder",
+icon:"🚀",
+name:"Startup Jobs",
+
+children:[
+
+{
+type:"link",
 icon:"💼",
-url:"https://linkedin.com/jobs"
+name:"YC Jobs",
+url:"https://www.ycombinator.com/jobs"
 },
 
 {
-name:"Naukri",
-icon:"🇮🇳",
-url:"https://naukri.com"
+type:"link",
+icon:"🦄",
+name:"Wellfound",
+url:"https://wellfound.com"
+}
+
+]
+
 },
 
 {
-name:"Indeed",
-icon:"📋",
-url:"https://indeed.com"
+type:"folder",
+icon:"🌎",
+name:"Remote Jobs",
+children:[]
+},
+
+{
+type:"folder",
+icon:"💻",
+name:"Freelance",
+children:[]
+},
+
+{
+type:"add-category",
+icon:"➕",
+name:"Add Category"
 }
 
 ],
@@ -228,64 +255,201 @@ url:"https://myntra.com"
    BUILD MENUS
 ==================================== */
 
-function buildMenu(
+function buildMenu(menuId, items){
 
-menuId,
-items
+    const menu =
+    document.getElementById(menuId);
 
-){
+    if(!menu) return;
 
-const menu =
+    menu.innerHTML = "";
 
-document.getElementById(
-menuId
-);
+    items.forEach(item=>{
 
-if(!menu)
-return;
+        const div =
+        document.createElement("div");
 
-menu.innerHTML = "";
+        div.className =
+        "submenu-item";
 
-items.forEach(item=>{
+        // ADD CATEGORY
+        if(item.type==="add-category"){
 
-const div =
-document.createElement(
-"div"
-);
+            div.innerHTML =
+            `${item.icon} ${item.name}`;
 
-div.className =
-"submenu-item";
+            div.addEventListener("click",()=>{
 
-div.innerHTML =
+                const name =
+                prompt("Category Name");
 
-`
-${item.icon}
-${item.name}
-`;
+                if(!name) return;
 
-div.addEventListener(
+                items.splice(
+                    items.length-1,
+                    0,
+                    {
+                        type:"folder",
+                        icon:"📁",
+                        name,
+                        children:[]
+                    }
+                );
 
-"click",
+                buildMenu(
+                    menuId,
+                    items
+                );
 
-()=>{
+            });
 
-window.open(
+            menu.appendChild(div);
+            return;
+        }
 
-item.url,
+        // FOLDER
+        if(item.type==="folder"){
 
-"_blank"
+            div.classList.add(
+                "folder-item"
+            );
 
-);
+            div.innerHTML =
+            `
+            <span>
+                ${item.icon}
+                ${item.name}
+            </span>
+
+            <span>▶</span>
+            `;
+
+            const nested =
+            document.createElement(
+                "div"
+            );
+
+            nested.className =
+            "nested-submenu";
+
+            div.appendChild(
+                nested
+            );
+
+            buildNestedMenu(
+                nested,
+                item
+            );
+
+            menu.appendChild(div);
+
+            return;
+        }
+
+        // LINK
+        div.innerHTML =
+        `
+        ${item.icon}
+        ${item.name}
+        `;
+
+        div.addEventListener(
+            "click",
+            ()=>window.open(
+                item.url,
+                "_blank"
+            )
+        );
+
+        menu.appendChild(div);
+
+    });
 
 }
 
-);
+function buildNestedMenu(
+container,
+folder
+){
 
-menu.appendChild(
-div
-);
+    container.innerHTML="";
 
-});
+    folder.children.forEach(item=>{
+
+        const div =
+        document.createElement(
+            "div"
+        );
+
+        div.className =
+        "submenu-item";
+
+        if(item.type==="link"){
+
+            div.innerHTML =
+            `${item.icon} ${item.name}`;
+
+            div.addEventListener(
+                "click",
+                ()=>window.open(
+                    item.url,
+                    "_blank"
+                )
+            );
+
+        }
+
+        container.appendChild(
+            div
+        );
+
+    });
+
+    const addLink =
+    document.createElement(
+        "div"
+    );
+
+    addLink.className =
+    "submenu-item";
+
+    addLink.innerHTML =
+    "➕ Add Link";
+
+    addLink.addEventListener(
+        "click",
+        ()=>{
+
+            const name =
+            prompt("Link Name");
+
+            if(!name) return;
+
+            const url =
+            prompt("URL");
+
+            if(!url) return;
+
+            folder.children.push({
+
+                type:"link",
+                icon:"🔗",
+                name,
+                url
+
+            });
+
+            buildNestedMenu(
+                container,
+                folder
+            );
+
+        }
+    );
+
+    container.appendChild(
+        addLink
+    );
 
 }
 

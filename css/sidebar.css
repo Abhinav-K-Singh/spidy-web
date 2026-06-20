@@ -370,3 +370,40 @@ translateX(0);
 }
 
 }
+
+
+
+
+.folder-item{
+    position:relative;
+}
+
+.nested-submenu{
+
+    position:absolute;
+
+    top:0;
+    left:100%;
+
+    min-width:260px;
+
+    max-height:70vh;
+
+    overflow-y:auto;
+
+    display:none;
+
+    z-index:99999;
+
+    border-radius:18px;
+
+    backdrop-filter:blur(20px);
+
+    background:rgba(20,20,20,.92);
+
+    padding:8px;
+}
+
+.folder-item:hover > .nested-submenu{
+    display:block;
+}
