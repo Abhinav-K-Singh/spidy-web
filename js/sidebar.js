@@ -369,32 +369,75 @@ container,
 folder
 ){
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
     folder.children.forEach(item=>{
 
         const div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
         div.className =
         "submenu-item";
 
-        if(item.type==="link"){
+        // FOLDER
+        if(item.type==="folder"){
 
-            div.innerHTML =
-            `${item.icon} ${item.name}`;
-
-            div.addEventListener(
-                "click",
-                ()=>window.open(
-                    item.url,
-                    "_blank"
-                )
+            div.classList.add(
+                "folder-item"
             );
 
+            div.innerHTML = `
+                <span>
+                    ${item.icon}
+                    ${item.name}
+                </span>
+
+                <span>▶</span>
+            `;
+
+            const nested =
+            document.createElement(
+                "div"
+            );
+
+            nested.className =
+            "nested-submenu";
+
+            div.appendChild(
+                nested
+            );
+
+            buildNestedMenu(
+                nested,
+                item
+            );
+
+            container.appendChild(
+                div
+            );
+
+            return;
         }
+
+        // LINK
+        div.innerHTML =
+        `${item.icon} ${item.name}`;
+
+        div.addEventListener(
+            "click",
+            ()=>{
+
+                if(item.url){
+
+                    window.open(
+                        item.url,
+                        "_blank"
+                    );
+
+                }
+
+            }
+        );
 
         container.appendChild(
             div
@@ -402,16 +445,16 @@ folder
 
     });
 
+    // ADD LINK
+
     const addLink =
-    document.createElement(
-        "div"
-    );
+    document.createElement("div");
 
     addLink.className =
     "submenu-item";
 
     addLink.innerHTML =
-    "➕ Add Link";
+    "🔗 Add Link";
 
     addLink.addEventListener(
         "click",
@@ -444,8 +487,49 @@ folder
         }
     );
 
+    // ADD FOLDER
+
+    const addFolder =
+    document.createElement("div");
+
+    addFolder.className =
+    "submenu-item";
+
+    addFolder.innerHTML =
+    "📁 Add Folder";
+
+    addFolder.addEventListener(
+        "click",
+        ()=>{
+
+            const name =
+            prompt("Folder Name");
+
+            if(!name) return;
+
+            folder.children.push({
+
+                type:"folder",
+                icon:"📁",
+                name,
+                children:[]
+
+            });
+
+            buildNestedMenu(
+                container,
+                folder
+            );
+
+        }
+    );
+
     container.appendChild(
         addLink
+    );
+
+    container.appendChild(
+        addFolder
     );
 
 }
