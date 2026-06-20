@@ -229,6 +229,35 @@ z-index:9999;
 .folder-item:hover > .nested-submenu{
     display:block;
 }
+
+}
+
+
+.job-item-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+}
+
+.job-actions{
+    display:flex;
+    gap:6px;
+    opacity:0;
+}
+
+.submenu-item:hover .job-actions{
+    opacity:1;
+}
+
+.rename-btn,
+.delete-btn{
+
+    border:none;
+    background:none;
+    cursor:pointer;
+
+    color:white;
 }
 
 /* ====================================

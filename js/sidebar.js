@@ -270,8 +270,93 @@ function buildMenu(menuId, items){
         // ADD CATEGORY
         if(item.type === "add-category"){
 
-            div.innerHTML =
-            `${item.icon} ${item.name}`;
+           div.innerHTML = `
+<div class="job-item-row">
+
+    <span>
+        ${item.icon}
+        ${item.name}
+    </span>
+
+    <span class="job-actions">
+
+        <button
+        class="rename-btn">
+        ✏
+        </button>
+
+        <button
+        class="delete-btn">
+        🗑
+        </button>
+
+    </span>
+
+</div>
+`;
+
+const renameBtn =
+div.querySelector(
+".rename-btn"
+);
+
+renameBtn.addEventListener(
+"click",
+(e)=>{
+
+e.stopPropagation();
+
+const newName =
+prompt(
+"Rename",
+item.name
+);
+
+if(!newName)
+return;
+
+item.name =
+newName;
+
+buildNestedMenu(
+container,
+folder
+);
+
+}
+);
+const deleteBtn =
+div.querySelector(
+".delete-btn"
+);
+
+deleteBtn.addEventListener(
+"click",
+(e)=>{
+
+e.stopPropagation();
+
+const confirmed =
+confirm(
+`Delete ${item.name}?`
+);
+
+if(!confirmed)
+return;
+
+folder.children =
+folder.children.filter(
+child =>
+child !== item
+);
+
+buildNestedMenu(
+container,
+folder
+);
+
+}
+);
 
             div.addEventListener("click", () => {
 
@@ -387,13 +472,95 @@ folder
             );
 
             div.innerHTML = `
-                <span>
-                    ${item.icon}
-                    ${item.name}
-                </span>
+<div class="job-item-row">
 
-                <span>▶</span>
-            `;
+    <span>
+        ${item.icon}
+        ${item.name}
+    </span>
+
+    <span>
+
+        <button
+        class="rename-root">
+        ✏
+        </button>
+
+        <button
+        class="delete-root">
+        🗑
+        </button>
+
+        ▶
+
+    </span>
+
+</div>
+`;
+
+const renameRoot =
+div.querySelector(
+".rename-root"
+);
+
+renameRoot.addEventListener(
+"click",
+(e)=>{
+
+e.stopPropagation();
+
+const name =
+prompt(
+"Rename Category",
+item.name
+);
+
+if(!name)
+return;
+
+item.name =
+name;
+
+buildMenu(
+menuId,
+items
+);
+
+}
+);
+const deleteRoot =
+div.querySelector(
+".delete-root"
+);
+
+deleteRoot.addEventListener(
+"click",
+(e)=>{
+
+e.stopPropagation();
+
+if(
+!confirm(
+`Delete ${item.name}?`
+)
+)
+return;
+
+const index =
+items.indexOf(item);
+
+items.splice(
+index,
+1
+);
+
+buildMenu(
+menuId,
+items
+);
+
+}
+);
 
             const nested =
             document.createElement(
