@@ -156,30 +156,25 @@ jobs:[
 type:"folder",
 icon:"🚀",
 name:"Startup Jobs",
-
 children:[
-
 {
 type:"link",
 icon:"💼",
 name:"YC Jobs",
 url:"https://www.ycombinator.com/jobs"
 },
-
 {
 type:"link",
 icon:"🦄",
 name:"Wellfound",
 url:"https://wellfound.com"
 }
-
 ]
-
 },
 
 {
 type:"folder",
-icon:"🌎",
+icon:"🌍",
 name:"Remote Jobs",
 children:[]
 },
