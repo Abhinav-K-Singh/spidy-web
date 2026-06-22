@@ -1,912 +1,119 @@
-/* ====================================
-   SPIDY SIDEBAR V2
-==================================== */
+import {
+    loadSidebar,
+    saveSidebar
+}
+from "./sidebar-storage.js";
 
-const sidebar =
+import {
+    renderTree
+}
+from "./sidebar-tree.js";
+
+let sidebarData =
+loadSidebar();
+
+const container =
 document.getElementById(
-"sidebar"
+    "sidebarDynamic"
 );
 
-const sidebarToggle =
-document.getElementById(
-"sidebar-toggle"
-);
-
-/* ====================================
-   COLLAPSE / EXPAND
-==================================== */
-
-sidebarToggle?.addEventListener(
-
-"click",
-
-()=>{
-
-sidebar.classList.toggle(
-"collapsed"
-);
-
-localStorage.setItem(
-
-"sidebarCollapsed",
-
-sidebar.classList.contains(
-"collapsed"
-)
-
-);
-
-}
-
-);
-
-/* ====================================
-   RESTORE STATE
-==================================== */
-
-if(
-
-localStorage.getItem(
-"sidebarCollapsed"
-)
-
-===
-
-"true"
-
-){
-
-sidebar.classList.add(
-"collapsed"
-);
-
-}
-
-/* ====================================
-   YOUTUBE BUTTON
-==================================== */
-
-document
-.getElementById(
-"youtubeBtn"
-)
-?.addEventListener(
-
-"click",
-
-()=>{
-
-window.open(
-
-"https://youtube.com",
-
-"_blank"
-
-);
-
-}
-
-);
-
-/* ====================================
-   PLATFORM DATA
-==================================== */
-
-const platforms = {
-
-coding:[
-
-{
-name:"LeetCode",
-icon:"🧩",
-url:"https://leetcode.com"
-},
-
-{
-name:"GitHub",
-icon:"🌐",
-url:"https://github.com"
-},
-
-{
-name:"HackerRank",
-icon:"🏆",
-url:"https://hackerrank.com"
-},
-
-{
-name:"Codeforces",
-icon:"⚡",
-url:"https://codeforces.com"
-}
-
-],
-
-social:[
-
-{
-name:"Instagram",
-icon:"📸",
-url:"https://instagram.com"
-},
-
-{
-name:"LinkedIn",
-icon:"💼",
-url:"https://linkedin.com"
-},
-
-{
-name:"X",
-icon:"🐦",
-url:"https://x.com"
-},
-
-{
-name:"Facebook",
-icon:"📘",
-url:"https://facebook.com"
-}
-
-],
-
-jobs:[
-
-{
-type:"folder",
-icon:"🚀",
-name:"Startup Jobs",
-children:[
-{
-type:"link",
-icon:"💼",
-name:"YC Jobs",
-url:"https://www.ycombinator.com/jobs"
-},
-{
-type:"link",
-icon:"🦄",
-name:"Wellfound",
-url:"https://wellfound.com"
-}
-]
-},
-
-{
-type:"folder",
-icon:"🌍",
-name:"Remote Jobs",
-children:[]
-},
-
-{
-type:"folder",
-icon:"💻",
-name:"Freelance",
-children:[]
-},
-
-{
-type:"add-category",
-icon:"➕",
-name:"Add Category"
-}
-
-],
-
-entertainment:[
-
-{
-name:"Netflix",
-icon:"🎬",
-url:"https://netflix.com"
-},
-
-{
-name:"Prime Video",
-icon:"📺",
-url:"https://primevideo.com"
-},
-
-{
-name:"Spotify",
-icon:"🎵",
-url:"https://spotify.com"
-},
-
-{
-name:"Hotstar",
-icon:"⭐",
-url:"https://hotstar.com"
-}
-
-],
-
-shop:[
-
-{
-name:"Amazon",
-icon:"📦",
-url:"https://amazon.in"
-},
-
-{
-name:"Flipkart",
-icon:"🛒",
-url:"https://flipkart.com"
-},
-
-{
-name:"Myntra",
-icon:"👕",
-url:"https://myntra.com"
-}
-
-]
-
-};
-
-/* ====================================
-   BUILD MENUS
-==================================== */
-
-function buildMenu(menuId, items){
-
-    const menu =
-    document.getElementById(menuId);
-
-    if(!menu) return;
-
-    menu.innerHTML = "";
-
-    items.forEach(item => {
-
-        const div =
-        document.createElement("div");
-
-        div.className =
-        "submenu-item";
-
-        // ADD CATEGORY
-        if(item.type === "add-category"){
-
-           div.innerHTML = `
-<div class="job-item-row">
-
-    <span>
-        ${item.icon}
-        ${item.name}
-    </span>
-
-    <span class="job-actions">
-
-        <button
-        class="rename-btn">
-        ✏
-        </button>
-
-        <button
-        class="delete-btn">
-        🗑
-        </button>
-
-    </span>
-
-</div>
-`;
-
-const renameBtn =
-div.querySelector(
-".rename-btn"
-);
-
-renameBtn.addEventListener(
-"click",
-(e)=>{
-
-e.stopPropagation();
-
-const newName =
-prompt(
-"Rename",
-item.name
-);
-
-if(!newName)
-return;
-
-item.name =
-newName;
-
-buildNestedMenu(
-container,
-folder
-);
-
-}
-);
-const deleteBtn =
-div.querySelector(
-".delete-btn"
-);
-
-deleteBtn.addEventListener(
-"click",
-(e)=>{
-
-e.stopPropagation();
-
-const confirmed =
-confirm(
-`Delete ${item.name}?`
-);
-
-if(!confirmed)
-return;
-
-folder.children =
-folder.children.filter(
-child =>
-child !== item
-);
-
-buildNestedMenu(
-container,
-folder
-);
-
-}
-);
-
-            div.addEventListener("click", () => {
-
-                const name =
-                prompt("Category Name");
-
-                if(!name) return;
-
-                items.splice(
-                    items.length - 1,
-                    0,
-                    {
-                        type:"folder",
-                        icon:"📁",
-                        name:name,
-                        children:[]
-                    }
-                );
-
-                buildMenu(
-                    menuId,
-                    items
-                );
-
-            });
-
-            menu.appendChild(div);
-            return;
-        }
-
-        // FOLDER
-        if(item.type === "folder"){
-
-            div.classList.add(
-                "folder-item"
-            );
-
-            div.innerHTML = `
-                <span>
-                    ${item.icon}
-                    ${item.name}
-                </span>
-
-                <span>▶</span>
-            `;
-
-            const nested =
-            document.createElement("div");
-
-            nested.className =
-            "nested-submenu";
-
-            div.appendChild(
-                nested
-            );
-
-            buildNestedMenu(
-                nested,
-                item
-            );
-
-            menu.appendChild(div);
-
-            return;
-        }
-
-        // LINK
-        div.innerHTML =
-        `${item.icon} ${item.name}`;
-
-        div.addEventListener(
-            "click",
-            () => {
-
-                if(item.url){
-
-                    window.open(
-                        item.url,
-                        "_blank"
-                    );
-
-                }
-
-            }
-        );
-
-        menu.appendChild(div);
-
-    });
-
-}
-
-function buildNestedMenu(
-container,
-folder
-){
+function renderSidebar() {
 
     container.innerHTML = "";
 
-    folder.children.forEach(item=>{
+    sidebarData.user.forEach(
+        category => {
 
-        const div =
-        document.createElement("div");
-
-        div.className =
-        "submenu-item";
-
-        // FOLDER
-        if(item.type==="folder"){
-
-            div.classList.add(
-                "folder-item"
-            );
-
-            div.innerHTML = `
-<div class="job-item-row">
-
-    <span>
-        ${item.icon}
-        ${item.name}
-    </span>
-
-    <span>
-
-        <button
-        class="rename-root">
-        ✏
-        </button>
-
-        <button
-        class="delete-root">
-        🗑
-        </button>
-
-        ▶
-
-    </span>
-
-</div>
-`;
-
-const renameRoot =
-div.querySelector(
-".rename-root"
-);
-
-renameRoot.addEventListener(
-"click",
-(e)=>{
-
-e.stopPropagation();
-
-const name =
-prompt(
-"Rename Category",
-item.name
-);
-
-if(!name)
-return;
-
-item.name =
-name;
-
-buildMenu(
-menuId,
-items
-);
-
-}
-);
-const deleteRoot =
-div.querySelector(
-".delete-root"
-);
-
-deleteRoot.addEventListener(
-"click",
-(e)=>{
-
-e.stopPropagation();
-
-if(
-!confirm(
-`Delete ${item.name}?`
-)
-)
-return;
-
-const index =
-items.indexOf(item);
-
-items.splice(
-index,
-1
-);
-
-buildMenu(
-menuId,
-items
-);
-
-}
-);
-
-            const nested =
-            document.createElement(
-                "div"
-            );
-
-            nested.className =
-            "nested-submenu";
-
-            div.appendChild(
-                nested
-            );
-
-            buildNestedMenu(
-                nested,
-                item
-            );
-
-            container.appendChild(
-                div
-            );
-
-            return;
-        }
-
-        // LINK
-        div.innerHTML =
-        `${item.icon} ${item.name}`;
-
-        div.addEventListener(
-            "click",
-            ()=>{
-
-                if(item.url){
-
-                    window.open(
-                        item.url,
-                        "_blank"
-                    );
-
-                }
-
-            }
-        );
-
-        container.appendChild(
-            div
-        );
-
-    });
-
-    // ADD LINK
-
-    const addLink =
-    document.createElement("div");
-
-    addLink.className =
-    "submenu-item";
-
-    addLink.innerHTML =
-    "🔗 Add Link";
-
-    addLink.addEventListener(
-        "click",
-        ()=>{
-
-            const name =
-            prompt("Link Name");
-
-            if(!name) return;
-
-            const url =
-            prompt("URL");
-
-            if(!url) return;
-
-            folder.children.push({
-
-                type:"link",
-                icon:"🔗",
-                name,
-                url
-
-            });
-
-            buildNestedMenu(
-                container,
-                folder
+            renderTree(
+                category,
+                container
             );
 
         }
     );
 
-    // ADD FOLDER
+}
+function createCategory(name){
 
-    const addFolder =
-    document.createElement("div");
+    return {
 
-    addFolder.className =
-    "submenu-item";
+        id: crypto.randomUUID(),
+        type: "category",
+        icon: "📁",
+        name,
+        children: []
 
-    addFolder.innerHTML =
-    "📁 Add Folder";
-
-    addFolder.addEventListener(
-        "click",
-        ()=>{
-
-            const name =
-            prompt("Folder Name");
-
-            if(!name) return;
-
-            folder.children.push({
-
-                type:"folder",
-                icon:"📁",
-                name,
-                children:[]
-
-            });
-
-            buildNestedMenu(
-                container,
-                folder
-            );
-
-        }
-    );
-
-    container.appendChild(
-        addLink
-    );
-
-    container.appendChild(
-        addFolder
-    );
+    };
 
 }
 
-/* ====================================
-   INIT MENUS
-==================================== */
+function createFolder(name){
 
-buildMenu(
-"codingMenu",
-platforms.coding
-);
+    return {
 
-buildMenu(
-"socialMenu",
-platforms.social
-);
+        id: crypto.randomUUID(),
+        type: "folder",
+        icon: "📁",
+        name,
+        children: []
 
-buildMenu(
-"jobMenu",
-platforms.jobs
-);
+    };
 
-buildMenu(
-"entertainmentMenu",
-platforms.entertainment
-);
+}
 
-buildMenu(
-"shopMenu",
-platforms.shop
-);
+function createLink(name,url){
 
-/* ====================================
-   ACTIVE NAV
-==================================== */
+    return {
 
+        id: crypto.randomUUID(),
+        type: "link",
+        icon: "🔗",
+        name,
+        url
+
+    };
+
+}
 document
-.querySelectorAll(
-".nav-item"
+.getElementById(
+"addCategoryBtn"
 )
-.forEach(item=>{
-
-item.addEventListener(
-
+.addEventListener(
 "click",
-
 ()=>{
 
-document
-.querySelectorAll(
-".nav-item"
-)
-.forEach(nav=>{
+    const name =
+    prompt(
+        "Category Name"
+    );
 
-nav.classList.remove(
-"active"
+    if(!name)
+    return;
+
+    sidebarData.user.push(
+    createCategory(name)
 );
+
+    saveSidebar(
+        sidebarData
+    );
+
+    renderSidebar();
 
 });
 
-item.classList.add(
-"active"
-);
+renderSidebar();
+window.renderSidebar =
+renderSidebar;
 
-}
+window.sidebarData =
+sidebarData;
 
-);
+window.saveSidebar =
+() => {
 
-});
+    saveSidebar(
+        sidebarData
+    );
 
-/* ====================================
-   CREATOR MODE
-==================================== */
-
-document
-.getElementById(
-"changeColors"
-)
-?.addEventListener(
-
-"click",
-
-()=>{
-
-const color =
-
-prompt(
-
-"Enter Hex Color",
-
-"#ff003c"
-
-);
-
-if(!color)
-return;
-
-document
-.documentElement
-.style.setProperty(
-
-"--red",
-
-color
-
-);
-
-localStorage.setItem(
-"spidyColor",
-color
-);
-
-}
-
-);
-
-document
-.getElementById(
-"changeGlass"
-)
-?.addEventListener(
-
-"click",
-
-()=>{
-
-const opacity =
-
-prompt(
-
-"Glass Opacity (0-1)",
-
-"0.08"
-
-);
-
-if(!opacity)
-return;
-
-document
-.documentElement
-.style.setProperty(
-
-"--glass-opacity",
-
-opacity
-
-);
-
-localStorage.setItem(
-
-"glassOpacity",
-
-opacity
-
-);
-
-}
-
-);
-
-/* ====================================
-   RESTORE CREATOR SETTINGS
-==================================== */
-
-const savedColor =
-
-localStorage.getItem(
-"spidyColor"
-);
-
-if(savedColor){
-
-document
-.documentElement
-.style.setProperty(
-
-"--red",
-
-savedColor
-
-);
-
-}
-
-const savedOpacity =
-
-localStorage.getItem(
-"glassOpacity"
-);
-
-if(savedOpacity){
-
-document
-.documentElement
-.style.setProperty(
-
-"--glass-opacity",
-
-savedOpacity
-
-);
-
-}
-
-/* ====================================
-   READY
-==================================== */
-
-console.log(
-"🕷 Sidebar V2 Loaded"
-);
+};

@@ -42,15 +42,19 @@ content="width=device-width, initial-scale=1.0">
 
 
 <aside id="sidebar">
+
+    <!-- Toggle -->
+
     <div id="sidebar-toggle">
 
-    <span class="toggle-icon">
-        ☰
-    </span>
+        <span class="toggle-icon">
+            ☰
+        </span>
 
-</div>
+    </div>
 
-    <!-- Logo Section -->
+    <!-- Header -->
+
     <div class="sidebar-header">
 
         <div class="logo">
@@ -64,180 +68,150 @@ content="width=device-width, initial-scale=1.0">
     </div>
 
     <!-- Navigation -->
-<nav id="sidebar-nav">
 
-    <!-- Dashboard -->
+    <nav id="sidebar-nav">
 
-    <div class="nav-item active" data-page="dashboard">
+        <!-- FIXED ITEMS -->
 
-        <span class="nav-icon">🏠</span>
+        <div class="nav-section">
 
-        <span class="nav-text">
-            Dashboard
-        </span>
+            <!-- Dashboard -->
 
-    </div>
+            <div
+            class="nav-item active"
+            data-page="dashboard">
 
-    <!-- Creator Mode -->
+                <span class="nav-icon">
+                    🏠
+                </span>
 
-    <div class="nav-item has-submenu">
-
-        <span class="nav-icon">🎨</span>
-
-        <span class="nav-text">
-            Creator
-        </span>
-
-        <div class="submenu">
-
-            <div class="submenu-item"
-                 id="changeColors">
-
-                🎨 Button Colors
+                <span class="nav-text">
+                    Dashboard
+                </span>
 
             </div>
 
-            <div class="submenu-item"
-                 id="changeGlass">
+            <!-- Creator -->
 
-                🪟 Glass Opacity
+            <div class="nav-item has-submenu">
+
+                <span class="nav-icon">
+                    🎨
+                </span>
+
+                <span class="nav-text">
+                    Creator
+                </span>
+
+                <div class="submenu">
+
+                    <div
+                    class="submenu-item"
+                    id="changeColors">
+
+                        🎨 Button Colors
+
+                    </div>
+
+                    <div
+                    class="submenu-item"
+                    id="changeGlass">
+
+                        🪟 Glass Opacity
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- YouTube -->
+
+            <div
+            class="nav-item"
+            id="youtubeBtn">
+
+                <span class="nav-icon">
+                    ▶️
+                </span>
+
+                <span class="nav-text">
+                    YouTube
+                </span>
+
+            </div>
+
+            <!-- Settings -->
+
+            <div class="nav-item">
+
+                <span class="nav-icon">
+                    ⚙️
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
 
             </div>
 
         </div>
 
-    </div>
+        <!-- Divider -->
 
-    <!-- YouTube -->
+        <div class="sidebar-divider">
 
-    <div class="nav-item"
-         id="youtubeBtn">
-
-        <span class="nav-icon">▶️</span>
-
-        <span class="nav-text">
-
-            YouTube
-
-        </span>
-
-    </div>
-
-    <!-- Coding -->
-
-    <div class="nav-item has-submenu">
-
-        <span class="nav-icon">💻</span>
-
-        <span class="nav-text">
-
-            Coding
-
-        </span>
-
-        <div
-        class="submenu"
-        id="codingMenu">
+            Categories
 
         </div>
 
-    </div>
+        <input
+id="sidebarSearch"
+placeholder="🔍 Search categories..."
+class="sidebar-search">
 
-    <!-- Social -->
+        <!-- Dynamic Categories -->
 
-    <div class="nav-item has-submenu">
-
-        <span class="nav-icon">🌍</span>
-
-        <span class="nav-text">
-
-            Social
-
-        </span>
-
-        <div
-        class="submenu"
-        id="socialMenu">
+        <div id="sidebarDynamic">
 
         </div>
 
-    </div>
+        <!-- Footer -->
 
-    <!-- Jobs -->
+        <div id="sidebarFooter">
 
-    <div class="nav-item has-submenu">
+            <button
+            id="addCategoryBtn"
+            class="sidebar-action-btn">
 
-        <span class="nav-icon">💼</span>
+                ➕ Add Category
 
-        <span class="nav-text">
+            </button>
 
-            Jobs
+            <button
+            id="exportSidebarBtn"
+            class="sidebar-action-btn">
 
-        </span>
+                📤 Export Sidebar
 
-        <div
-        class="submenu"
-        id="jobMenu">
+            </button>
 
-        </div>
+            <label
+            class="sidebar-action-btn">
 
-    </div>
+                📥 Import Sidebar
 
-    <!-- Entertainment -->
+                <input
+                type="file"
+                id="importSidebarInput"
+                accept=".json"
+                hidden>
 
-    <div class="nav-item has-submenu">
-
-        <span class="nav-icon">🎬</span>
-
-        <span class="nav-text">
-
-            Entertainment
-
-        </span>
-
-        <div
-        class="submenu"
-        id="entertainmentMenu">
+            </label>
 
         </div>
 
-    </div>
-
-    <!-- Shopping -->
-
-    <div class="nav-item has-submenu">
-
-        <span class="nav-icon">🛒</span>
-
-        <span class="nav-text">
-
-            Shop
-
-        </span>
-
-        <div
-        class="submenu"
-        id="shopMenu">
-
-        </div>
-
-    </div>
-
-    <!-- Settings -->
-
-    <div class="nav-item">
-
-        <span class="nav-icon">⚙️</span>
-
-        <span class="nav-text">
-
-            Settings
-
-        </span>
-
-    </div>
-
-</nav>
+    </nav>
 
 </aside>
 
@@ -773,7 +747,7 @@ placeholder="Type a command..."
 
 <script src="js/utils.js"></script>
 
-<script src="js/sidebar.js"></script>
+<script type="module" src="js/sidebar.js"></script>
 
 <script src="js/settings.js"></script>
 
